@@ -5,7 +5,7 @@
 
 import { QUESTIONS, TOTAL_STEPS } from './questions.js';
 import { scoreAnswers } from './scoring.js';
-import { ARCHETYPES_BY_ID, FORMATS } from './archetypes.js';
+import { ARCHETYPES_BY_ID } from './archetypes.js';
 import { COPY } from './copy.js';
 import { submitEmail } from './email.js';
 import { track } from './analytics.js';
@@ -137,7 +137,6 @@ export function mount(root) {
       track('quiz_complete', {
         archetype: state.result.archetypeId,
         formats: state.result.formats,
-        deep: state.result.deep,
       });
       showEmail();
     }
@@ -222,30 +221,18 @@ export function mount(root) {
       el('p', { class: 'kq-reading', text: c.reading }),
     ];
 
-    // hero (with §1 fallback redirect line)
-    let note = null;
-    if (r.hero?.fallback) {
-      const reqList = (r.hero.fallback.requestedFormats || []).map(formatLabel);
-      const requested = reqList.length ? 'a ' + reqList.join(' or ') : 'a different format';
-      note = COPY.results.fallbackLine
-        .replace('{requestedFormat}', requested)
-        .replace('{actualFormat}', formatLabel(r.hero.fallback.actualFormat))
-        .replace('{archetype}', a.name);
+    // featured set at the top
+    if (r.set) {
+      const setBlock = productNode(r.set, { label: COPY.results.setLabel, primaryCta: true, placement: 'set' });
+      if (setBlock) nodes.push(el('div', { class: 'kq-block' }, [setBlock]));
     }
-    const heroLabel = r.hero?.product?.isSet ? COPY.results.ritualLabel : COPY.results.heroLabel;
-    const heroBlock = productNode(r.hero?.product, { label: heroLabel, primaryCta: true, placement: 'hero', note });
-    if (heroBlock) nodes.push(el('div', { class: 'kq-block' }, [heroBlock]));
 
-    // supporting
-    const supBlock = productNode(r.supporting, { label: COPY.results.supportingLabel, placement: 'supporting' });
-    if (supBlock) nodes.push(el('div', { class: 'kq-block' }, [supBlock]));
-
-    // pairing upsell
-    if (r.pairing) {
+    // the five highlighted blends
+    if (r.products?.length) {
       nodes.push(el('div', { class: 'kq-block' }, [
-        el('p', { class: 'kq-block-label', text: COPY.results.pairingLabel }),
-        el('p', { class: 'kq-product-essence', text: c.pairing }),
-        el('div', { class: 'kq-pairing' }, [productNode(r.pairing.product, { placement: 'pairing' })]),
+        el('p', { class: 'kq-block-label', text: COPY.results.productsLabel }),
+        el('div', { class: 'kq-product-list' },
+          r.products.map((p) => productNode(p, { placement: 'product' }))),
       ]));
     }
 
@@ -254,13 +241,6 @@ export function mount(root) {
     nodes.push(el('button', { class: 'kq-back', text: COPY.results.restart, onclick: restart }));
 
     swap(el('div', {}, nodes));
-  }
-
-  function formatLabel(id) {
-    // Use the short format noun ("bath soak", "diffuser blend") — NOT the long
-    // Q5 answer label — so the fallback line reads naturally.
-    const f = FORMATS.find((x) => x.id === id);
-    return (f?.label || id).toLowerCase();
   }
 
   function restart() {

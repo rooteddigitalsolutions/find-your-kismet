@@ -1,6 +1,6 @@
 {
   "generatedFrom": "data/products.csv",
-  "count": 37,
+  "count": 45,
   "products": [
     {
       "slug": "adjust-release-diffuser-blend",
@@ -798,6 +798,169 @@
       ]
     },
     {
+      "slug": "the-awakening-set",
+      "title": "The Awakening Set",
+      "url": "/shop/the-awakening-set",
+      "price": 75,
+      "onSale": false,
+      "salePrice": null,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/9887a26a-a697-4da9-b281-1cf1786f15d8/the-awakening-set-collage.jpg",
+      "essence": "Open the veil. Remember why you're here.",
+      "blurb": "Includes: Alignment with Soul Purpose Diffuser + Spiritual Connection Body Blend + God/dess Spray. Save $10 vs. buying separately.",
+      "themes": [
+        "Spiritual Connection",
+        "Transformation & Growth"
+      ],
+      "archetypes": [
+        "oracle",
+        "emerge"
+      ],
+      "format": "kit",
+      "collections": []
+    },
+    {
+      "slug": "the-awareness-set",
+      "title": "The Awareness Set",
+      "url": "/shop/the-awareness-set",
+      "price": 75,
+      "onSale": false,
+      "salePrice": null,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/b10a946b-52cb-4d2b-8a69-85e0a1271965/the-awareness-set-collage.jpg",
+      "essence": "Turn your sight inward. See what you've been missing.",
+      "blurb": "Includes: Awareness Body Blend + Clairvoyance Body Blend + Congruity Bath Salts. Save $10 vs. buying separately.",
+      "themes": [
+        "Insight & Processing"
+      ],
+      "archetypes": [
+        "oracle"
+      ],
+      "format": "kit",
+      "collections": []
+    },
+    {
+      "slug": "the-calm-set",
+      "title": "The Calm Set",
+      "url": "/shop/the-calm-set",
+      "price": 75,
+      "onSale": false,
+      "salePrice": null,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/adb08e22-555d-403e-b910-a6fe71759ce5/the-calm-set-collage.jpg",
+      "essence": "Soften your grip. Let the day dissolve.",
+      "blurb": "Includes: Adjust & Release Diffuser + Patience Diffuser + Peaceful Comfort Bath Salts. Save $10 vs. buying separately.",
+      "themes": [
+        "Calm & Comfort"
+      ],
+      "archetypes": [
+        "anchor"
+      ],
+      "format": "kit",
+      "collections": []
+    },
+    {
+      "slug": "the-clarity-set",
+      "title": "The Clarity Set",
+      "url": "/shop/the-clarity-set",
+      "price": 75,
+      "onSale": false,
+      "salePrice": null,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/c435fc8e-d804-49f1-a8da-0e9f69d73589/the-clarity-set-collage.jpg",
+      "essence": "Cut the fog. Find your drive. Move.",
+      "blurb": "Includes: Clarity Diffuser + Motivate Diffuser + Fortitude Body Blend. Save $15 vs. buying separately.",
+      "themes": [
+        "Spiritual Connection",
+        "Insight & Processing"
+      ],
+      "archetypes": [
+        "oracle"
+      ],
+      "format": "kit",
+      "collections": []
+    },
+    {
+      "slug": "the-courage-set",
+      "title": "The Courage Set",
+      "url": "/shop/the-courage-set",
+      "price": 75,
+      "onSale": false,
+      "salePrice": null,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/f551e85f-9cf5-4f5e-9b14-89f03eeea026/the-courage-set-collage.jpg",
+      "essence": "Stand in your power. Clear what no longer serves.",
+      "blurb": "Includes: Home Diffuser + Fortitude Body Blend + Kali Spray. Save $10 vs. buying separately.",
+      "themes": [
+        "Courage & Strength",
+        "Grounding & Protection"
+      ],
+      "archetypes": [
+        "kali",
+        "anchor"
+      ],
+      "format": "kit",
+      "collections": []
+    },
+    {
+      "slug": "the-creator-set",
+      "title": "The Creator Set",
+      "url": "/shop/the-creator-set",
+      "price": 75,
+      "onSale": false,
+      "salePrice": null,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/85efcbfa-17ae-4ec2-8a6c-0605b7b62e0c/the-creator-set-collage.jpg",
+      "essence": "Reignite the maker in you. Become what's next.",
+      "blurb": "Includes: Create Diffuser + Emerge Body Blend + Create & Manifest Spray. Save $10 vs. buying separately.",
+      "themes": [
+        "Focus & Confidence",
+        "Courage & Strength"
+      ],
+      "archetypes": [
+        "beacon",
+        "kali"
+      ],
+      "format": "kit",
+      "collections": []
+    },
+    {
+      "slug": "the-grounding-set",
+      "title": "The Grounding Set",
+      "url": "/shop/the-grounding-set",
+      "price": 75,
+      "onSale": false,
+      "salePrice": null,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/ab4715de-45c0-4227-9676-22deb8d96111/the-grounding-set-collage.jpg",
+      "essence": "Root into your body. Make your space safe.",
+      "blurb": "Includes: Grounding Diffuser + For The Land Diffuser + Protect Spray. Save $10 vs. buying separately.",
+      "themes": [
+        "Grounding & Protection",
+        "Transformation & Growth"
+      ],
+      "archetypes": [
+        "anchor",
+        "emerge"
+      ],
+      "format": "kit",
+      "collections": []
+    },
+    {
+      "slug": "the-healing-set",
+      "title": "The Healing Set",
+      "url": "/shop/the-healing-set",
+      "price": 75,
+      "onSale": false,
+      "salePrice": null,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/acb4e493-5b5f-4e5c-bc53-a79aa1eefe8a/the-healing-set-collage.jpg",
+      "essence": "Forgive. Release. Let yourself mend.",
+      "blurb": "Includes: Forgiveness Diffuser + Non-Attachment Body Blend + Overcoming Grief Spray. Save $10 vs. buying separately.",
+      "themes": [
+        "Healing & Pathfinding",
+        "Calm & Comfort"
+      ],
+      "archetypes": [
+        "solace",
+        "anchor"
+      ],
+      "format": "kit",
+      "collections": []
+    },
+    {
       "slug": "transitions-body-blend",
       "title": "Transitions Body Blend",
       "url": "/shop/transitions-body-blend",
@@ -851,36 +1014,40 @@
     "anchor": {
       "diffuser": 5,
       "spray": 6,
-      "bath": 1
+      "bath": 1,
+      "kit": 4
     },
     "oracle": {
       "diffuser": 4,
       "body": 5,
       "bath": 2,
       "spray": 4,
-      "kit": 1
+      "kit": 4
     },
     "emerge": {
       "diffuser": 4,
       "body": 3,
       "spray": 2,
-      "kit": 1
+      "kit": 3
     },
     "beacon": {
       "diffuser": 5,
       "spray": 4,
-      "body": 3
+      "body": 3,
+      "kit": 1
     },
     "solace": {
       "diffuser": 6,
       "bath": 2,
       "body": 1,
-      "spray": 1
+      "spray": 1,
+      "kit": 1
     },
     "kali": {
       "diffuser": 3,
       "spray": 3,
-      "body": 1
+      "body": 1,
+      "kit": 2
     }
   }
 }

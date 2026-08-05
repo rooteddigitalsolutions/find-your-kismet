@@ -76,7 +76,7 @@ export const QUESTIONS = [
   {
     id: 'q5',
     kind: 'format',
-    multi: true, // visitor can accept more than one format; hero matches any chosen
+    multi: true, // visitor can accept more than one format; used to order the recommendations
     other: true,
     otherPlaceholder: 'A different way — type it here',
     prompt: 'How do you want it to reach you?',
@@ -86,18 +86,7 @@ export const QUESTIONS = [
       { label: 'On my skin, close', format: 'body' },
       { label: 'A long soak, all the way down', format: 'bath' },
       { label: 'Give me the whole ritual', format: 'kit' },
-    ],
-  },
-  {
-    id: 'q6',
-    kind: 'depth',
-    multi: true, // multi-capable for consistency; "deep" wins if it's among the picks
-    other: true,
-    otherPlaceholder: 'Something else — type it here',
-    prompt: 'How far do you want to go?',
-    options: [
-      { label: 'Somewhere gentle to start', deep: false },
-      { label: "All the way in — I'm ready", deep: true },
+      { label: "I'm not sure", format: null }, // no preference — recommend across all formats
     ],
   },
 ];

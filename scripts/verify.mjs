@@ -18,7 +18,7 @@ const slugs = new Set([...data.products.map((p) => p.slug), ...Object.values(SET
 
 const byKind = (k) => QUESTIONS.find((q) => q.kind === k);
 const q1 = QUESTIONS[0].options, q2 = QUESTIONS[1].options, q3 = QUESTIONS[2].options;
-const q4 = byKind('context').options, q5 = byKind('format').options, q6 = byKind('depth').options;
+const q4 = byKind('context').options, q5 = byKind('format').options;
 
 const reached = new Set();
 const badCtas = [];
@@ -26,14 +26,16 @@ let combos = 0;
 
 const one = (opt) => ({ options: [opt], other: '' }); // single-select probe
 for (const a1 of q1) for (const a2 of q2) for (const a3 of q3)
-for (const a4 of q4) for (const a5 of q5) for (const a6 of q6) {
+for (const a4 of q4) for (const a5 of q5) {
   combos++;
-  const r = scoreAnswers({ q1: one(a1), q2: one(a2), q3: one(a3), q4: one(a4), q5: one(a5), q6: one(a6) });
+  const r = scoreAnswers({ q1: one(a1), q2: one(a2), q3: one(a3), q4: one(a4), q5: one(a5) });
   reached.add(r.archetypeId);
-  for (const p of [r.hero?.product, r.supporting, r.pairing?.product]) {
+  const cta = [r.set, ...(r.products || [])];
+  for (const p of cta) {
     if (p && !slugs.has(p.slug)) badCtas.push(`${r.archetypeId}: ${p.slug}`);
   }
-  if (!r.hero?.product) badCtas.push(`${r.archetypeId}: NO HERO`);
+  if (!r.set) badCtas.push(`${r.archetypeId}: NO SET`);
+  if ((r.products || []).length < 5) badCtas.push(`${r.archetypeId}: only ${r.products?.length || 0} products`);
 }
 
 const allIds = ARCHETYPES.map((a) => a.id);

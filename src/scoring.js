@@ -1,25 +1,16 @@
 // ============================================================================
-//  scoring.js  —  answers -> archetype + format + product picks
+//  scoring.js  —  answers -> archetype + featured set + top 5 blends
 // ----------------------------------------------------------------------------
-//  Pure logic, no DOM. Implements the depth gate (Q6) and the §1 fallback rules
-//  for empty (archetype x format) cells.
+//  Pure logic, no DOM. All six archetypes are reachable directly by score
+//  (there is no depth gate). Each result features the archetype's set at the
+//  top plus the five best-matching individual blends.
 // ============================================================================
 
 import data from './data.json' with { type: 'json' };
-import { ARCHETYPES, ARCHETYPES_BY_ID, THEME_TO_ARCHETYPE, resolveTier } from './archetypes.js';
+import { ARCHETYPES, ARCHETYPES_BY_ID, THEME_TO_ARCHETYPE } from './archetypes.js';
 import { SETS } from './sets.js';
 
 const PRODUCTS = data.products;
-
-// Complementary archetype for the pairing upsell (§5, step 4).
-const COMPLEMENT = {
-  anchor: 'oracle',
-  beacon: 'anchor',
-  oracle: 'solace',
-  solace: 'beacon',
-  emerge: 'oracle',
-  kali: 'anchor',
-};
 
 function productsFor(archetypeId) {
   return PRODUCTS.filter((p) => p.archetypes.includes(archetypeId));
@@ -39,57 +30,16 @@ function rank(candidates, archetypeId) {
   });
 }
 
-// The archetype's best available format when the requested one is empty:
-// the format with the most products (ties broken by FORMATS order via first-seen).
-function bestFormatFor(archetypeId) {
-  const pool = productsFor(archetypeId);
-  const counts = {};
-  for (const p of pool) counts[p.format] = (counts[p.format] || 0) + 1;
-  let best = null;
-  let bestN = -1;
-  for (const p of pool) {
-    if (counts[p.format] > bestN) { bestN = counts[p.format]; best = p.format; }
-  }
-  return best;
-}
-
-// §1 fallback: resolve the best hero product for (archetype, formats[], deep).
-// `formats` is the set of formats the visitor accepted in Q5 (multi-select). An
-// empty set means "no preference" — any format is fine, no fallback note.
-function pickHero(archetypeId, formats) {
-  const pool = productsFor(archetypeId);
-  if (!pool.length) return null;
-
-  const wanted = formats && formats.length ? formats : null;
-  const exact = wanted ? pool.filter((p) => wanted.includes(p.format)) : pool;
-  if (exact.length) {
-    return { product: rank(exact, archetypeId)[0], fallback: null };
-  }
-
-  // Rule 1: same archetype, best other format + in-voice redirect line.
-  const actualFormat = bestFormatFor(archetypeId);
-  const relaxed = pool.filter((p) => p.format === actualFormat);
-  const product = rank(relaxed.length ? relaxed : pool, archetypeId)[0];
-  return {
-    product,
-    fallback: { requestedFormats: wanted || [], actualFormat: product.format },
-  };
-}
-
-function pickSupporting(archetypeId, heroSlug) {
-  const pool = productsFor(archetypeId).filter((p) => p.slug !== heroSlug);
-  if (!pool.length) return null;
-  return rank(pool, archetypeId)[0];
-}
-
-function pickPairing(archetypeId, excludeSlugs) {
-  const compId = COMPLEMENT[archetypeId] || 'oracle';
-  const chain = [compId, ...ARCHETYPES.map((a) => a.id)]; // try complement, then any
-  for (const id of chain) {
-    const pool = productsFor(id).filter((p) => !excludeSlugs.has(p.slug));
-    if (pool.length) return { archetypeId: id, product: rank(pool, id)[0] };
-  }
-  return null;
+// Top individual blends for an archetype (sets/kits excluded), ordered so the
+// visitor's chosen format(s) come first, then the rest by quality rank.
+function topBlends(archetypeId, formats, limit = 5) {
+  const pool = productsFor(archetypeId).filter((p) => p.format !== 'kit');
+  const ranked = rank(pool, archetypeId);
+  const prefs = (formats || []).filter((f) => f && f !== 'kit');
+  if (!prefs.length) return ranked.slice(0, limit);
+  const matches = ranked.filter((p) => prefs.includes(p.format));
+  const rest = ranked.filter((p) => !prefs.includes(p.format));
+  return [...matches, ...rest].slice(0, limit);
 }
 
 // Normalize one question's answer into { options:[...], other:'' }. Accepts the
@@ -109,7 +59,7 @@ function normalize(ans) {
 export function scoreAnswers(answers) {
   const a = {
     q1: normalize(answers.q1), q2: normalize(answers.q2), q3: normalize(answers.q3),
-    q4: normalize(answers.q4), q5: normalize(answers.q5), q6: normalize(answers.q6),
+    q4: normalize(answers.q4), q5: normalize(answers.q5),
   };
 
   // 1) tally theme points across every SELECTED option (multi-select)
@@ -135,45 +85,30 @@ export function scoreAnswers(answers) {
     .filter((id) => (archPoints[id] || 0) > 0)
     .sort((x, y) => (archPoints[y] - archPoints[x]) || (order.indexOf(x) - order.indexOf(y)));
 
-  // depth: deep wins if ANY selected Q6 option is the deep one
-  const deep = a.q6.options.some((o) => o.deep);
-  // formats: every format the visitor accepted in Q5 (may be several, or none)
+  // formats: every format the visitor accepted in Q5 ("I'm not sure" is null and
+  // drops out here, meaning no preference).
   const formats = a.q5.options.map((o) => o.format).filter(Boolean);
   // free-text the visitor typed, kept for analytics / email personalization
   const others = Object.entries(a)
     .map(([qid, v]) => (v.other ? { qid, text: v.other } : null))
     .filter(Boolean);
 
-  // 4) winner, resolved against the depth gate
-  const rawWinner = ranked[0] || 'anchor';
-  const archetypeId = resolveTier(rawWinner, deep);
+  // 4) winner — all six archetypes reachable directly (no depth gate)
+  const archetypeId = ranked[0] || 'anchor';
 
-  // 5) hero product. If the visitor chose "the whole ritual" (kit), the hero is
-  //    the archetype's curated set; otherwise it's the best single blend.
+  // 5) the featured set (always, shown at top) + top 5 individual blends
+  const set = SETS[archetypeId] || null;
+  const products = topBlends(archetypeId, formats, 5);
   const wantsRitual = formats.includes('kit');
-  let hero;
-  if (wantsRitual && SETS[archetypeId]) {
-    hero = { product: SETS[archetypeId], fallback: null };
-  } else {
-    // ignore 'kit' when matching individual blends (no per-archetype kit SKUs)
-    hero = pickHero(archetypeId, formats.filter((f) => f !== 'kit'));
-  }
-  const supporting = hero ? pickSupporting(archetypeId, hero.product.slug) : null;
-  const exclude = new Set([hero?.product.slug, supporting?.slug].filter(Boolean));
-  const pairing = pickPairing(archetypeId, exclude);
 
   return {
     archetypeId,
-    rawWinner,
-    redirected: rawWinner !== archetypeId, // deep archetype folded to surface
-    deep,
     formats,
-    wantsRitual, // visitor chose "the whole ritual" → hero is a set
+    wantsRitual,
     others,      // [{ qid, text }]
     scores: archPoints,
     ranked,
-    hero,        // { product, fallback }
-    supporting,  // product | null
-    pairing,     // { archetypeId, product } | null
+    set,         // the archetype's set — featured at top
+    products,    // top 5 blends
   };
 }

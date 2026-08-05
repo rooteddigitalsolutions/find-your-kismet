@@ -19,7 +19,7 @@ export const COPY = {
     eyebrow: 'A short ritual',
     title: 'Find Your Kismet',
     body:
-      "Six questions, two minutes. Not a personality test — a way of listening " +
+      "Five questions, two minutes. Not a personality test — a way of listening " +
       "for what you're actually carrying right now, and the blend that meets it.",
     cta: 'Begin',
   },
@@ -33,17 +33,9 @@ export const COPY = {
   },
 
   results: {
-    heroLabel: 'Your blend',
-    ritualLabel: 'Your whole ritual',
-    supportingLabel: 'Keep close',
-    pairingLabel: 'When you’re ready for more',
+    setLabel: 'Start here — your set',
+    productsLabel: 'Five blends chosen for you',
     restart: 'Take it again',
-    // {requestedFormat} / {actualFormat} filled at runtime (§1 redirect line).
-    // {requestedFormat} is the visitor's chosen format(s), e.g. "a bath soak" or
-    // "a bath soak or body blend".
-    fallbackLine:
-      "You reached for {requestedFormat}; Kismet didn't have one for {archetype} yet, " +
-      "so it offered a {actualFormat} that carries the same spirit.",
   },
 
   // ---- the six archetype readings ------------------------------------------
