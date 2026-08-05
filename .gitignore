@@ -1,0 +1,19 @@
+node_modules/
+.DS_Store
+
+# SECURITY: the raw Squarespace export contains HIDDEN/unpublished products,
+# SKUs, and internal IDs. NEVER commit it to a public repo. Keep it local only.
+data/*.csv
+
+# Secrets — never commit (Mailchimp key, tokens, etc.)
+.env
+.env.*
+
+# src/data.json IS committed on purpose: it holds only Visible=Yes products
+# (public storefront info, no SKUs/IDs) and lets `npm run build` work from a clone.
+
+# Option-A paste file (regenerate any time; not needed in the repo).
+preview/kismet-embed-paste-into-squarespace.html
+
+# NOTE: preview/kismet-quiz.v1.js IS committed on purpose — jsDelivr serves it
+# from this repo. Rebuild with `npm run build` and commit the updated file.

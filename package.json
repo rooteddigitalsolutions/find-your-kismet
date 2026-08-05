@@ -1,0 +1,16 @@
+{
+  "name": "find-your-kismet",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Find Your Kismet — an archetype quiz for Color of Kismet, embedded as a single-file widget on Squarespace.",
+  "scripts": {
+    "build-data": "node scripts/build-data.mjs",
+    "build": "vite build",
+    "dev": "npm run build-data && vite build --watch",
+    "preview": "vite preview --outDir preview --port 4321"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0"
+  }
+}
