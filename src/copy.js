@@ -26,11 +26,10 @@ export const COPY = {
 
   email: {
     title: 'Where should your Kismet find you?',
-    body: "Leave your email and we'll send your result and the blend that matched — no noise, just this.",
+    body: "Enter your email to unlock your result and the blend that matched — plus we'll send it to you. No noise, just this.",
     placeholder: 'you@email.com',
-    submit: 'Send me my result',
-    skip: 'Skip — just show me',
-    disclaimer: "One email. You can unsubscribe anytime.",
+    submit: 'Reveal my result',
+    disclaimer: "One email to send your result. You can unsubscribe anytime.",
   },
 
   results: {

@@ -143,10 +143,10 @@ export function mount(root) {
     }
   }
 
-  // ---- email (skippable) ----------------------------------------------------
+  // ---- email (required — must enter a valid email to see the result) --------
   function showEmail() {
     renderProgress(0, true);
-    const input = el('input', { class: 'kq-input', type: 'email', placeholder: COPY.email.placeholder, autocomplete: 'email' });
+    const input = el('input', { class: 'kq-input', type: 'email', placeholder: COPY.email.placeholder, autocomplete: 'email', required: 'required' });
     const errNode = el('p', { class: 'kq-error kq-hidden' });
     const submitBtn = el('button', { class: 'kq-btn kq-btn-primary kq-btn-full', type: 'submit', text: COPY.email.submit });
 
@@ -170,7 +170,6 @@ export function mount(root) {
       el('h2', { class: 'kq-h2', text: COPY.email.title }),
       el('p', { class: 'kq-lead', text: COPY.email.body }),
       form,
-      el('button', { class: 'kq-back', text: COPY.email.skip, onclick: showResults }),
       el('p', { class: 'kq-fine', text: COPY.email.disclaimer }),
     ]));
   }
