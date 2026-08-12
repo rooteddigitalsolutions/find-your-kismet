@@ -32,6 +32,17 @@ function money(p) {
 export function mount(root) {
   const state = { step: 0, answers: {}, result: null };
 
+  // Persist the result so a refresh / return within the window restores it
+  // instead of dumping the visitor back at the intro.
+  const SAVE_KEY = 'kq_result_v1';
+  const SAVE_TTL = 45 * 60 * 1000; // 45 minutes
+  const saveResult = () => { try { localStorage.setItem(SAVE_KEY, JSON.stringify({ t: Date.now(), result: state.result })); } catch (_) {} };
+  const clearResult = () => { try { localStorage.removeItem(SAVE_KEY); } catch (_) {} };
+  const loadResult = () => {
+    try { const s = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null'); if (s && Date.now() - s.t < SAVE_TTL) return s.result; } catch (_) {}
+    return null;
+  };
+
   const card = el('div', { class: 'kq-card' });
   const progress = el('div', { class: 'kq-progress' });
   const screen = el('div', { class: 'kq-screen' });
@@ -192,24 +203,27 @@ export function mount(root) {
     if (note) parts.push(el('p', { class: 'kq-fallback-note', text: note }));
     parts.push(row);
 
+    // Links open in a NEW TAB so the quiz is never navigated away from / lost.
+    // (Squarespace forbids framing its pages, so add-to-cart happens on the
+    // product page itself — this keeps the quiz intact while they shop.)
     const href = product.url;
+    const linkAttrs = { href, target: '_blank', rel: 'noopener',
+      onclick: () => track('result_click', { slug: product.slug, placement }) };
     if (primaryCta) {
       parts.push(el('a', {
-        class: 'kq-btn kq-btn-primary', href, style: 'display:inline-block;margin-top:16px;text-decoration:none;',
-        text: `Shop ${product.title}`,
-        onclick: () => track('result_click', { slug: product.slug, placement }),
+        ...linkAttrs,
+        class: 'kq-btn kq-btn-primary', style: 'display:inline-block;margin-top:16px;text-decoration:none;',
+        text: `View & add to cart ↗`,
       }));
     } else {
-      body.appendChild(el('a', {
-        class: 'kq-link', href, text: 'See the blend →',
-        onclick: () => track('result_click', { slug: product.slug, placement }),
-      }));
+      body.appendChild(el('a', { ...linkAttrs, class: 'kq-link', text: 'View & add to cart ↗' }));
     }
     return el('div', {}, parts);
   }
 
   function showResults() {
     renderProgress(0, true);
+    saveResult();
     const r = state.result;
     const a = ARCHETYPES_BY_ID[r.archetypeId];
     const c = COPY.archetypes[r.archetypeId];
@@ -247,8 +261,17 @@ export function mount(root) {
     state.step = 0;
     state.answers = {};
     state.result = null;
+    clearResult();
     showIntro();
   }
 
-  showIntro();
+  // If they took the quiz recently (e.g. opened a product in a new tab and came
+  // back, or refreshed), restore their result instead of the intro.
+  const restored = loadResult();
+  if (restored) {
+    state.result = restored;
+    showResults();
+  } else {
+    showIntro();
+  }
 }
