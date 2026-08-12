@@ -10,13 +10,18 @@
 //  to feature the other.
 // ============================================================================
 
+// Master switch. The $75 sets are currently HIDDEN in Squarespace, so featuring
+// them would link to dead pages. Set to `false` to hide sets from the quiz
+// results entirely. Flip back to `true` once the sets are public again.
+export const FEATURE_SETS = false;
+
 const IMG = 'https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/';
 
 function set(slug, title, archetypeId, includes, image) {
   return {
     slug,
     title,
-    url: `/shop/${slug}`,
+    url: `/products/${slug}`,
     price: 75,
     essence: includes,   // shown on the results card (what's inside the set)
     blurb: includes,

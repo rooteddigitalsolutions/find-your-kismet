@@ -34,7 +34,7 @@ export const COPY = {
 
   results: {
     setLabel: 'Start here — your set',
-    productsLabel: 'Five blends chosen for you',
+    productsLabel: 'Blends chosen for you',
     restart: 'Take it again',
   },
 

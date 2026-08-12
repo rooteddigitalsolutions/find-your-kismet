@@ -8,7 +8,7 @@
 
 import data from './data.json' with { type: 'json' };
 import { ARCHETYPES, ARCHETYPES_BY_ID, THEME_TO_ARCHETYPE } from './archetypes.js';
-import { SETS } from './sets.js';
+import { SETS, FEATURE_SETS } from './sets.js';
 
 const PRODUCTS = data.products;
 
@@ -96,9 +96,10 @@ export function scoreAnswers(answers) {
   // 4) winner — all six archetypes reachable directly (no depth gate)
   const archetypeId = ranked[0] || 'anchor';
 
-  // 5) the featured set (always, shown at top) + top 5 individual blends
-  const set = SETS[archetypeId] || null;
-  const products = topBlends(archetypeId, formats, 5);
+  // 5) the featured set (only when sets are live) + top individual blends.
+  //    When sets are hidden we show 6 blends to fill the space the set left.
+  const set = FEATURE_SETS ? (SETS[archetypeId] || null) : null;
+  const products = topBlends(archetypeId, formats, set ? 5 : 6);
   const wantsRitual = formats.includes('kit');
 
   return {

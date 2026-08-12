@@ -85,8 +85,7 @@ export const QUESTIONS = [
       { label: 'Something I can carry and mist', format: 'spray' },
       { label: 'On my skin, close', format: 'body' },
       { label: 'A long soak, all the way down', format: 'bath' },
-      { label: 'Give me the whole ritual', format: 'kit' },
-      { label: "I'm not sure", format: null }, // no preference — recommend across all formats
+      { label: "I'm not sure, show me everything", format: null }, // no preference — recommend across all formats
     ],
   },
 ];

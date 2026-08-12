@@ -30,11 +30,10 @@ for (const a4 of q4) for (const a5 of q5) {
   combos++;
   const r = scoreAnswers({ q1: one(a1), q2: one(a2), q3: one(a3), q4: one(a4), q5: one(a5) });
   reached.add(r.archetypeId);
-  const cta = [r.set, ...(r.products || [])];
+  const cta = [r.set, ...(r.products || [])].filter(Boolean);
   for (const p of cta) {
-    if (p && !slugs.has(p.slug)) badCtas.push(`${r.archetypeId}: ${p.slug}`);
+    if (!slugs.has(p.slug)) badCtas.push(`${r.archetypeId}: ${p.slug}`);
   }
-  if (!r.set) badCtas.push(`${r.archetypeId}: NO SET`);
   if ((r.products || []).length < 5) badCtas.push(`${r.archetypeId}: only ${r.products?.length || 0} products`);
 }
 
