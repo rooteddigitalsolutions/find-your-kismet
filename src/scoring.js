@@ -32,8 +32,11 @@ function rank(candidates, archetypeId) {
 
 // Top individual blends for an archetype (sets/kits excluded), ordered so the
 // visitor's chosen format(s) come first, then the rest by quality rank.
-function topBlends(archetypeId, formats, limit = 5) {
-  const pool = productsFor(archetypeId).filter((p) => p.format !== 'kit');
+// `availableSlugs` (optional Set) restricts to products currently visible in the
+// store; null/undefined means no filtering (fall back to the full catalog).
+function topBlends(archetypeId, formats, limit = 5, availableSlugs = null) {
+  let pool = productsFor(archetypeId).filter((p) => p.format !== 'kit');
+  if (availableSlugs) pool = pool.filter((p) => availableSlugs.has(p.slug));
   const ranked = rank(pool, archetypeId);
   const prefs = (formats || []).filter((f) => f && f !== 'kit');
   if (!prefs.length) return ranked.slice(0, limit);
@@ -56,7 +59,8 @@ function normalize(ans) {
  * @param {Object} answers  keyed by question id -> { options:[opt...], other:'' }
  * @returns {Object} result payload consumed by the UI + copy layer
  */
-export function scoreAnswers(answers) {
+export function scoreAnswers(answers, opts = {}) {
+  const availableSlugs = opts.availableSlugs || null;
   const a = {
     q1: normalize(answers.q1), q2: normalize(answers.q2), q3: normalize(answers.q3),
     q4: normalize(answers.q4), q5: normalize(answers.q5),
@@ -96,10 +100,11 @@ export function scoreAnswers(answers) {
   // 4) winner — all six archetypes reachable directly (no depth gate)
   const archetypeId = ranked[0] || 'anchor';
 
-  // 5) the featured set (only when sets are live) + top individual blends.
+  // 5) the featured set (only when sets are live AND visible) + top blends.
   //    When sets are hidden we show 6 blends to fill the space the set left.
-  const set = FEATURE_SETS ? (SETS[archetypeId] || null) : null;
-  const products = topBlends(archetypeId, formats, set ? 5 : 6);
+  let set = FEATURE_SETS ? (SETS[archetypeId] || null) : null;
+  if (set && availableSlugs && !availableSlugs.has(set.slug)) set = null; // set went offline
+  const products = topBlends(archetypeId, formats, set ? 5 : 6, availableSlugs);
   const wantsRitual = formats.includes('kit');
 
   return {

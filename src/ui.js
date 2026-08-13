@@ -9,6 +9,7 @@ import { ARCHETYPES_BY_ID } from './archetypes.js';
 import { COPY } from './copy.js';
 import { submitEmail } from './email.js';
 import { track } from './analytics.js';
+import { getVisibleSlugs, getVisibleSlugsWithTimeout } from './availability.js';
 
 // ---- tiny DOM helper --------------------------------------------------------
 function el(tag, attrs = {}, children = []) {
@@ -32,16 +33,20 @@ function money(p) {
 export function mount(root) {
   const state = { step: 0, answers: {}, result: null };
 
-  // Persist the result so a refresh / return within the window restores it
-  // instead of dumping the visitor back at the intro.
-  const SAVE_KEY = 'kq_result_v1';
+  // Persist the ANSWERS so a refresh / return within the window restores the
+  // result — recomputed against current availability, not a stale snapshot.
+  const SAVE_KEY = 'kq_answers_v1';
   const SAVE_TTL = 45 * 60 * 1000; // 45 minutes
-  const saveResult = () => { try { localStorage.setItem(SAVE_KEY, JSON.stringify({ t: Date.now(), result: state.result })); } catch (_) {} };
-  const clearResult = () => { try { localStorage.removeItem(SAVE_KEY); } catch (_) {} };
-  const loadResult = () => {
-    try { const s = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null'); if (s && Date.now() - s.t < SAVE_TTL) return s.result; } catch (_) {}
+  const saveAnswers = () => { try { localStorage.setItem(SAVE_KEY, JSON.stringify({ t: Date.now(), answers: state.answers })); } catch (_) {} };
+  const clearSaved = () => { try { localStorage.removeItem(SAVE_KEY); } catch (_) {} };
+  const loadAnswers = () => {
+    try { const s = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null'); if (s && Date.now() - s.t < SAVE_TTL) return s.answers; } catch (_) {}
     return null;
   };
+
+  // Warm the live-availability fetch as soon as the widget mounts, so it's ready
+  // by the time anyone reaches results.
+  getVisibleSlugs();
 
   const card = el('div', { class: 'kq-card' });
   const progress = el('div', { class: 'kq-progress' });
@@ -146,11 +151,11 @@ export function mount(root) {
       state.step++;
       showQuestion();
     } else {
+      // baked result (archetype is availability-independent); showResults() later
+      // refines the product list against what's currently in stock.
       state.result = scoreAnswers(state.answers);
-      track('quiz_complete', {
-        archetype: state.result.archetypeId,
-        formats: state.result.formats,
-      });
+      track('quiz_complete', { archetype: state.result.archetypeId, formats: state.result.formats });
+      saveAnswers();
       showEmail();
     }
   }
@@ -223,9 +228,13 @@ export function mount(root) {
     return el('div', {}, parts);
   }
 
-  function showResults() {
+  async function showResults() {
     renderProgress(0, true);
-    saveResult();
+    // Filter recommendations to products currently visible in the store (falls
+    // back to the full catalog if the live feed can't be read).
+    const availableSlugs = await getVisibleSlugsWithTimeout();
+    state.result = scoreAnswers(state.answers, { availableSlugs });
+    saveAnswers();
     const r = state.result;
     const a = ARCHETYPES_BY_ID[r.archetypeId];
     const c = COPY.archetypes[r.archetypeId];
@@ -263,15 +272,15 @@ export function mount(root) {
     state.step = 0;
     state.answers = {};
     state.result = null;
-    clearResult();
+    clearSaved();
     showIntro();
   }
 
   // If they took the quiz recently (e.g. opened a product in a new tab and came
   // back, or refreshed), restore their result instead of the intro.
-  const restored = loadResult();
-  if (restored) {
-    state.result = restored;
+  const restoredAnswers = loadAnswers();
+  if (restoredAnswers) {
+    state.answers = restoredAnswers;
     showResults();
   } else {
     showIntro();
