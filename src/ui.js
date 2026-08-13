@@ -10,6 +10,7 @@ import { COPY } from './copy.js';
 import { submitEmail } from './email.js';
 import { track } from './analytics.js';
 import { getVisibleSlugs, getVisibleSlugsWithTimeout } from './availability.js';
+import { addToCart } from './cart.js';
 
 // ---- tiny DOM helper --------------------------------------------------------
 function el(tag, attrs = {}, children = []) {
@@ -210,21 +211,38 @@ export function mount(root) {
     if (note) parts.push(el('p', { class: 'kq-fallback-note', text: note }));
     parts.push(row);
 
-    // Links open in a NEW TAB so the quiz is never navigated away from / lost.
-    // (Squarespace forbids framing its pages, so add-to-cart happens on the
-    // product page itself — this keeps the quiz intact while they shop.)
-    const href = product.url;
-    const linkAttrs = { href, target: '_blank', rel: 'noopener',
-      onclick: () => track('result_click', { slug: product.slug, placement }) };
-    if (primaryCta) {
-      parts.push(el('a', {
-        ...linkAttrs,
-        class: 'kq-btn kq-btn-primary', style: 'display:inline-block;margin-top:16px;text-decoration:none;',
-        text: `View & add to cart ↗`,
-      }));
-    } else {
-      body.appendChild(el('a', { ...linkAttrs, class: 'kq-link', text: 'View & add to cart ↗' }));
-    }
+    // Product Info always opens the product page in a NEW TAB (quiz stays put).
+    const openProduct = () => window.open(product.url, '_blank', 'noopener');
+    const infoBtn = el('a', {
+      class: 'kq-btn kq-btn-ghost kq-btn-sm', href: product.url, target: '_blank', rel: 'noopener',
+      text: 'Product Info',
+      onclick: () => track('result_click', { slug: product.slug, placement: placement + ':info' }),
+    });
+
+    // Add to Cart tries Squarespace's own cart directly; on ANY failure it falls
+    // back to opening the product page (which has a native Add to Cart).
+    const cartBtn = el('button', { class: 'kq-btn kq-btn-primary kq-btn-sm', type: 'button', text: 'Add to Cart' });
+    cartBtn.addEventListener('click', async () => {
+      if (cartBtn.dataset.done === '1') { window.open('/cart', '_blank', 'noopener'); return; }
+      cartBtn.disabled = true;
+      cartBtn.innerHTML = '<span class="kq-spin"></span>Adding…';
+      const ok = await addToCart(product);
+      if (ok) {
+        track('result_click', { slug: product.slug, placement: placement + ':add' });
+        cartBtn.disabled = false;
+        cartBtn.dataset.done = '1';
+        cartBtn.classList.add('is-added');
+        cartBtn.textContent = 'Added ✓ — view cart';
+      } else {
+        // graceful fallback: behave like a product link
+        track('result_click', { slug: product.slug, placement: placement + ':add-fallback' });
+        openProduct();
+        cartBtn.disabled = false;
+        cartBtn.textContent = 'Add to Cart';
+      }
+    });
+
+    parts.push(el('div', { class: 'kq-btn-row' }, [infoBtn, cartBtn]));
     return el('div', {}, parts);
   }
 

@@ -158,6 +158,9 @@ for (const r of all) {
     slug,
     title,
     url: `/shop/p/${slug}`,
+    // itemId + sku drive the same-origin add-to-cart POST (see src/cart.js)
+    productId: (r['Product ID [Non Editable]'] || '').trim(),
+    sku: (r['SKU'] || '').trim(),
     price: parseFloat(r['Price'] || '0') || null,
     onSale: (r['On Sale'] || '').trim() === 'Yes',
     salePrice: parseFloat(r['Sale Price'] || '0') || null,
