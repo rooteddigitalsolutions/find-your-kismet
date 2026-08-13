@@ -223,9 +223,11 @@
   margin: 0 0 16px; font-style: italic;
 }
 .kq-pairing { background: var(--kq-cream); border: 1px dashed var(--kq-line); border-radius: var(--kq-radius-sm); padding: 16px 18px; }
-.kq-product-list { display: flex; flex-direction: column; gap: 20px; }
-.kq-product-list .kq-product { padding-bottom: 20px; border-bottom: 1px solid var(--kq-line); }
-.kq-product-list > div:last-child .kq-product { border-bottom: none; padding-bottom: 0; }
+.kq-product-list { display: flex; flex-direction: column; gap: 22px; }
+/* divider sits under the WHOLE item (product + its buttons), so the buttons
+   read as belonging to the product above them, not the one below. */
+.kq-product-list > .kq-product-item { padding-bottom: 22px; border-bottom: 1px solid var(--kq-line); }
+.kq-product-list > .kq-product-item:last-child { border-bottom: none; padding-bottom: 0; }
 .kq-link { color: var(--kq-accent); font-weight: 600; text-decoration: none; }
 .kq-link:hover { text-decoration: underline; }
 .kq-close { font-family: var(--kq-font-head); font-size: 1.15rem; color: var(--kq-ink); margin: 26px 0 20px; }

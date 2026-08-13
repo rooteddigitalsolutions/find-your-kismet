@@ -243,7 +243,7 @@ export function mount(root) {
     });
 
     parts.push(el('div', { class: 'kq-btn-row' }, [infoBtn, cartBtn]));
-    return el('div', {}, parts);
+    return el('div', { class: 'kq-product-item' }, parts);
   }
 
   async function showResults() {
