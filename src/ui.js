@@ -60,7 +60,9 @@ export function mount(root) {
     }
   }
 
-  function swap(node) { screen.innerHTML = ''; screen.appendChild(node); screen.scrollIntoView?.({ block: 'nearest' }); }
+  // Render in place. Never scrollIntoView — that would yank the page down to the
+  // widget on load (and on every step). The visitor controls the scroll.
+  function swap(node) { screen.innerHTML = ''; screen.appendChild(node); }
 
   // ---- intro ----------------------------------------------------------------
   function showIntro() {
