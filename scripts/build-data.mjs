@@ -157,7 +157,7 @@ for (const r of all) {
   products.push({
     slug,
     title,
-    url: `/products/${slug}`,
+    url: `/shop/p/${slug}`,
     price: parseFloat(r['Price'] || '0') || null,
     onSale: (r['On Sale'] || '').trim() === 'Yes',
     salePrice: parseFloat(r['Sale Price'] || '0') || null,

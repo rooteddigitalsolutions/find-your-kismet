@@ -21,7 +21,7 @@ function set(slug, title, archetypeId, includes, image) {
   return {
     slug,
     title,
-    url: `/products/${slug}`,
+    url: `/shop/p/${slug}`,
     price: 75,
     essence: includes,   // shown on the results card (what's inside the set)
     blurb: includes,
