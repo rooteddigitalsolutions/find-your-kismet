@@ -38,17 +38,17 @@ export async function personalizedReading(result, answers) {
     const opts = answers?.[q]?.options || [];
     for (const o of opts) if (o?.label) answerLabels.push(o.sub ? `${o.label}: ${o.sub}` : o.label);
   }
-  // Split the recommendations into the two tiers the results page shows, so the
-  // AI can frame the "go deeper" notes as a next step.
-  const titles = (result?.products || []).map((p) => p.title);
+  // The AI re-ranks these candidates into a top 3 + 2 to go deeper, by relevance
+  // to what the visitor wrote. Sending each blend's essence gives it enough to
+  // judge fit. `blends` is kept as a flat back-compat list for an older Worker.
+  const products = (result?.products || []).slice(0, 5);
   const payload = {
     archetype: a.name,
     tagline: a.tagline,
     answers: answerLabels,
     others: (result?.others || []).map((o) => o.text).filter(Boolean), // includes the open-ended Q6
-    core: titles.slice(0, 3),
-    deeper: titles.slice(3, 5),
-    blends: titles.slice(0, 5), // back-comp: older Worker reads this flat list
+    candidates: products.map((p) => ({ title: p.title, essence: p.essence || '' })),
+    blends: products.map((p) => p.title), // back-comp: older Worker reads this flat list
     // NOTE: email is deliberately NOT sent — the reading needs none of it.
   };
 
@@ -65,12 +65,18 @@ export async function personalizedReading(result, answers) {
     const data = await res.json();
     const reading = (data && data.reading) ? String(data.reading).trim() : '';
     if (!reading) return null;
-    const picks = Array.isArray(data.picks)
-      ? data.picks
-          .filter((p) => p && p.title && p.why)
-          .map((p) => ({ title: String(p.title).trim(), why: String(p.why).trim() }))
-      : [];
-    return { reading, picks };
+    const norm = (arr) => (Array.isArray(arr) ? arr : [])
+      .filter((p) => p && p.title && p.why)
+      .map((p) => ({ title: String(p.title).trim(), why: String(p.why).trim() }));
+    let top = norm(data.top);
+    let deeper = norm(data.deeper);
+    if (!top.length && !deeper.length) {
+      // older Worker shape: a flat picks[] in scored order
+      const picks = norm(data.picks);
+      top = picks.slice(0, 3);
+      deeper = picks.slice(3, 5);
+    }
+    return { reading, top, deeper };
   } catch (_) {
     return null;
   } finally {

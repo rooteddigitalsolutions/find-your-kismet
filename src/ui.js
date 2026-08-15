@@ -43,25 +43,34 @@ function normTitle(t) {
   return String(t || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 }
 
-// Drop each AI "why" note into the matching product card (exact title first,
-// then a tolerant contains-match). Idempotent — safe to call more than once.
-function applyPicks(picks, whyEntries) {
-  if (!Array.isArray(picks) || !whyEntries) return;
-  for (const p of picks) {
-    if (!p || !p.why) continue;
-    const t = normTitle(p.title);
-    let e = whyEntries.find((x) => !x.filled && x.key === t);
-    if (!e) e = whyEntries.find((x) => !x.filled && (x.key.includes(t) || t.includes(x.key)));
-    if (!e) continue;
-    e.node.textContent = deDash(p.why);
-    e.node.classList.remove('kq-hidden');
-    e.node.classList.add('kq-reading-swap');
-    e.filled = true;
-  }
+// Re-rank the scored products into the AI's two tiers, matching by title (exact
+// first, then a tolerant contains-match). Any product the AI dropped or renamed
+// is back-filled in scored order, so all five always appear.
+function orderProducts(products, aiTop, aiDeeper) {
+  const used = new Set();
+  const take = (arr) =>
+    (Array.isArray(arr) ? arr : [])
+      .map((x) => {
+        const key = normTitle(x && x.title);
+        if (!key) return null;
+        let p =
+          products.find((pp) => !used.has(pp) && normTitle(pp.title) === key) ||
+          products.find((pp) => !used.has(pp) && (normTitle(pp.title).includes(key) || key.includes(normTitle(pp.title))));
+        if (!p) return null;
+        used.add(p);
+        return { product: p, why: (x.why || '').trim() || null };
+      })
+      .filter(Boolean);
+  const top = take(aiTop);
+  const deeper = take(aiDeeper);
+  const leftovers = products.filter((p) => !used.has(p));
+  while (top.length < Math.min(3, products.length) && leftovers.length) top.push({ product: leftovers.shift(), why: null });
+  while (deeper.length < 2 && leftovers.length) deeper.push({ product: leftovers.shift(), why: null });
+  return { top, deeper };
 }
 
 export function mount(root) {
-  const state = { step: 0, answers: {}, result: null, email: '', logged: false, aiReading: null, aiPicks: null };
+  const state = { step: 0, answers: {}, result: null, email: '', logged: false, aiReading: null, aiSel: null };
 
   // Persist the ANSWERS so a refresh / return within the window restores the
   // result — recomputed against current availability, not a stale snapshot.
@@ -215,7 +224,7 @@ export function mount(root) {
       e.preventDefault();
       const email = input.value.trim();
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        errNode.textContent = 'That email looks off — mind checking it?';
+        errNode.textContent = 'That email looks off. Mind checking it?';
         errNode.classList.remove('kq-hidden');
         return;
       }
@@ -236,15 +245,15 @@ export function mount(root) {
   }
 
   // ---- results --------------------------------------------------------------
-  function productNode(product, { label, primaryCta, placement, note, whyEntries } = {}) {
+  function productNode(product, { label, primaryCta, placement, note, why } = {}) {
     if (!product) return null;
     const img = product.image
       ? el('img', { class: 'kq-product-img', src: product.image, alt: product.title, loading: 'lazy' })
       : el('div', { class: 'kq-product-img is-empty', text: '❋' });
 
-    // Personalized "why this fits you" note — hidden until the AI fills it in.
-    const whyEl = el('p', { class: 'kq-product-why kq-hidden' });
-    if (whyEntries) whyEntries.push({ key: normTitle(product.title), node: whyEl, filled: false });
+    // Personalized "why this fits you" note — shown only when the AI supplied one.
+    const whyEl = el('p', { class: 'kq-product-why' + (why ? '' : ' kq-hidden') });
+    if (why) whyEl.textContent = deDash(why);
 
     const body = el('div', { class: 'kq-product-body' }, [
       el('p', { class: 'kq-product-title', text: product.title }),
@@ -280,7 +289,7 @@ export function mount(root) {
         cartBtn.disabled = false;
         cartBtn.dataset.done = '1';
         cartBtn.classList.add('is-added');
-        cartBtn.textContent = 'Added ✓ — view cart';
+        cartBtn.textContent = 'Added ✓, view cart';
       } else {
         // graceful fallback: behave like a product link
         track('result_click', { slug: product.slug, placement: placement + ':add-fallback' });
@@ -324,48 +333,59 @@ export function mount(root) {
       readingEl,
     ];
 
-    // Collects each product card's "why this fits you" slot so the AI response
-    // can drop personalized notes into the right cards.
-    const whyEntries = [];
-
-    // featured set at the top
+    // featured set at the top (sets currently off; leads when re-enabled)
     if (r.set) {
-      const setBlock = productNode(r.set, { label: COPY.results.setLabel, primaryCta: true, placement: 'set', whyEntries });
+      const setBlock = productNode(r.set, { label: COPY.results.setLabel, primaryCta: true, placement: 'set' });
       if (setBlock) nodes.push(el('div', { class: 'kq-block' }, [setBlock]));
     }
 
-    // Blends in two tiers: a top 3 to start with, then 2 to go deeper. When a
-    // set is featured we skip tiers (it already leads). Max 5 either way.
-    const blends = r.products || [];
-    const blockFor = (label, list) => el('div', { class: 'kq-block' }, [
-      el('p', { class: 'kq-block-label', text: label }),
-      el('div', { class: 'kq-product-list' },
-        list.map((p) => productNode(p, { placement: 'product', whyEntries }))),
-    ]);
-    if (r.set) {
-      if (blends.length) nodes.push(blockFor(COPY.results.productsLabel, blends.slice(0, 5)));
-    } else if (blends.length) {
-      nodes.push(blockFor(COPY.results.topLabel, blends.slice(0, 3)));
-      const deeper = blends.slice(3, 5);
-      if (deeper.length) nodes.push(blockFor(COPY.results.deeperLabel, deeper));
-    }
+    // Blends live in their own container so we can render them AFTER the AI has
+    // re-ranked them by what the visitor wrote (top 3 = most relevant, then 2 to
+    // go deeper). Until then we show a short loading line; if the AI is off or
+    // fails, we fall back to the scored order. Max 5 either way.
+    const blends = (r.products || []).slice(0, 5);
+    const blendsWrap = el('div', { class: 'kq-block' });
+    nodes.push(blendsWrap);
 
-    // AI personalization: swap the reading AND fill the per-blend notes. Pure
-    // progressive enhancement — on any failure the pre-written copy just stays.
-    if (personalizationEnabled() && !state.aiReading) {
+    const tierBlock = (label, items) => {
+      if (!items.length) return;
+      blendsWrap.appendChild(el('p', { class: 'kq-block-label', text: label }));
+      blendsWrap.appendChild(el('div', { class: 'kq-product-list' },
+        items.map((it) => productNode(it.product, { placement: 'product', why: it.why }))));
+    };
+    const renderTiers = ({ top, deeper }) => {
+      blendsWrap.innerHTML = '';
+      tierBlock(COPY.results.topLabel, top);
+      tierBlock(COPY.results.deeperLabel, deeper);
+    };
+    const scoredOrder = () => ({
+      top: blends.slice(0, 3).map((p) => ({ product: p, why: null })),
+      deeper: blends.slice(3, 5).map((p) => ({ product: p, why: null })),
+    });
+
+    if (!blends.length) {
+      // nothing to show
+    } else if (personalizationEnabled() && !state.aiSel) {
+      // loading line while the AI re-ranks + writes notes
+      blendsWrap.appendChild(el('p', { class: 'kq-block-label', text: COPY.results.topLabel }));
+      blendsWrap.appendChild(el('div', { class: 'kq-loading' }, [
+        el('span', { class: 'kq-spin-dark' }), 'Choosing the blends that fit what you shared…',
+      ]));
       personalizedReading(state.result, state.answers).then((res) => {
-        if (!res) return;
+        if (!res) { renderTiers(scoredOrder()); return; }
         state.aiReading = res.reading;
-        state.aiPicks = res.picks;
+        state.aiSel = { top: res.top, deeper: res.deeper };
         if (readingEl.isConnected) {
           readingEl.classList.add('kq-reading-swap');
           readingEl.textContent = deDash(res.reading);
         }
-        applyPicks(res.picks, whyEntries);
+        renderTiers(orderProducts(blends, res.top, res.deeper));
       });
-    } else if (state.aiPicks) {
-      // restore path: reading + picks already fetched this session
-      applyPicks(state.aiPicks, whyEntries);
+    } else if (state.aiSel) {
+      // restore path: reuse the ranking already fetched this session
+      renderTiers(orderProducts(blends, state.aiSel.top, state.aiSel.deeper));
+    } else {
+      renderTiers(scoredOrder());
     }
 
     // restart, as a rounded button
@@ -383,7 +403,7 @@ export function mount(root) {
     state.email = '';
     state.logged = false;
     state.aiReading = null;
-    state.aiPicks = null;
+    state.aiSel = null;
     clearSaved();
     showIntro();
   }

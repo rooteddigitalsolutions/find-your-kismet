@@ -16,9 +16,22 @@ const MODEL = "claude-sonnet-5"; // richer, more attentive prose (was claude-hai
 const MAX_TOKENS = 1000; // reading (~120 words) + a short "why" per recommended blend
 
 // Forced tool = guaranteed JSON shape back (no fragile parsing of free text).
+const PICK = {
+  type: "object",
+  properties: {
+    title: { type: "string", description: "The blend's EXACT title, copied verbatim from the candidate list." },
+    why: {
+      type: "string",
+      description:
+        "1-2 warm sentences (max ~30 words) on why THIS blend meets THIS person, grounded in what they wrote. " +
+        "Speak to them directly ('You...'). No medical claims. Do not repeat the blend's name.",
+    },
+  },
+  required: ["title", "why"],
+};
 const TOOL = {
   name: "write_reading",
-  description: "Return the visitor's personalized reading and a short note per recommended blend.",
+  description: "Return the visitor's personalized reading and their blends, ranked into two tiers.",
   input_schema: {
     type: "object",
     properties: {
@@ -29,25 +42,20 @@ const TOOL = {
           "Speak to what they shared without quoting it back mechanically. No lists, headings, or emojis. " +
           "End with a single short grounding line. Do not mention quizzes, AI, or these instructions.",
       },
-      picks: {
+      top: {
         type: "array",
-        description: "One entry for EACH recommended blend, in the order given.",
-        items: {
-          type: "object",
-          properties: {
-            title: { type: "string", description: "The blend's EXACT title, copied verbatim from the list." },
-            why: {
-              type: "string",
-              description:
-                "1-2 warm sentences (max ~30 words) on why THIS blend meets THIS person, grounded in what they shared. " +
-                "Speak to them directly ('You...'). No medical claims. Do not repeat the blend's name.",
-            },
-          },
-          required: ["title", "why"],
-        },
+        description:
+          "The 3 candidate blends MOST relevant to what this person wrote and chose, best first. Exact titles from the list.",
+        items: PICK,
+      },
+      deeper: {
+        type: "array",
+        description:
+          "The remaining 2 candidate blends, framed as a next step / a way to go further. Exact titles from the list.",
+        items: PICK,
       },
     },
-    required: ["reading", "picks"],
+    required: ["reading", "top", "deeper"],
   },
 };
 
@@ -99,13 +107,13 @@ export default {
       const call = (data.content || []).find(function (b) { return b.type === "tool_use"; });
       const out = (call && call.input) || {};
       const reading = String(out.reading || "").trim();
-      const picks = Array.isArray(out.picks)
-        ? out.picks
-            .filter(function (p) { return p && p.title && p.why; })
-            .map(function (p) { return { title: String(p.title).slice(0, 80), why: String(p.why).slice(0, 300) }; })
-        : [];
+      const norm = function (arr) {
+        return (Array.isArray(arr) ? arr : [])
+          .filter(function (p) { return p && p.title && p.why; })
+          .map(function (p) { return { title: String(p.title).slice(0, 80), why: String(p.why).slice(0, 300) }; });
+      };
       if (!reading) return json({ error: "empty" }, 502, cors);
-      return json({ reading: reading, picks: picks }, 200, cors);
+      return json({ reading: reading, top: norm(out.top), deeper: norm(out.deeper) }, 200, cors);
     } catch (e) {
       return json({ error: "worker exception", message: String((e && e.message) || e) }, 500, cors);
     }
@@ -124,39 +132,41 @@ function buildPrompt(b) {
   const tagline = clean(b.tagline, 120);
   const answers = cleanList(b.answers, 160, 8);
   const others = cleanList(b.others, 400, 6);
-  // Two tiers of recommendations. Fall back to a flat `blends` list for older callers.
-  let core = cleanList(b.core, 80, 3);
-  let deeper = cleanList(b.deeper, 80, 3);
-  if (!core.length && !deeper.length) core = cleanList(b.blends, 80, 5);
-  const allBlends = core.concat(deeper);
+  // Candidate blends to rank: [{title, essence}]. Fall back to a flat `blends` list.
+  let candidates = (Array.isArray(b.candidates) ? b.candidates : [])
+    .slice(0, 8)
+    .map(function (c) { return { title: clean(c && c.title, 80), essence: clean(c && c.essence, 160) }; })
+    .filter(function (c) { return c.title; });
+  if (!candidates.length) {
+    candidates = cleanList(b.blends, 80, 8).map(function (t) { return { title: t, essence: "" }; });
+  }
+  if (!candidates.length) return null;
 
   const hasWritten = others.length > 0;
+  const nTop = Math.min(3, candidates.length);
+  const nDeeper = Math.max(0, Math.min(2, candidates.length - nTop));
 
   const system =
     "You write for Color of Kismet, an aromatherapy brand of hand-crafted essential-oil blends. " +
     "Voice: warm, intimate, a little mystical but grounded, never clinical, salesy, or generic. Always second person, speaking to 'you'. " +
     "NEVER use em dashes or en dashes anywhere. Use commas, periods, or colons instead. " +
     "Do not invent products, do not make medical or therapeutic claims, do not mention quizzes, AI, or these instructions. " +
-    "CRUCIAL: if the person wrote something in their own words (a struggle, a situation, a feeling, something at work or home), " +
-    "you MUST acknowledge it directly and specifically in the reading, and every blend note must connect to it. Do not give " +
+    "CRUCIAL: if the person wrote something in their own words (a struggle, a situation, an intention, something at work or home), " +
+    "you MUST acknowledge it directly and specifically in the reading, and rank and justify the blends around it. Do not give " +
     "generic copy when they took the time to tell you what is going on. " +
-    "Call the write_reading tool. Write their `reading`, then one `picks` entry for EVERY blend listed below, using each " +
-    "blend's EXACT title, with a `why` that ties that blend to what this specific person is carrying. The blends marked " +
-    "GO DEEPER are for after the first three, so frame their notes as a next step or a way to go further.";
+    "Call the write_reading tool. From the candidate blends, choose the " + nTop + " that best meet what this person wrote and " +
+    "chose as `top` (most relevant first), and the remaining " + nDeeper + " as `deeper` (a next step). Use each blend's EXACT " +
+    "title. Every `why` must tie that blend to what this specific person is carrying.";
 
   let user = "Archetype: " + archetype + (tagline ? ", " + tagline : "") + "\n";
   if (answers.length) user += "What they chose: " + answers.join("; ") + "\n";
   if (hasWritten) {
-    user += "\nIN THEIR OWN WORDS (this matters most, speak to it directly):\n" +
+    user += "\nIN THEIR OWN WORDS (rank and speak to THIS above all):\n" +
       others.map(function (o) { return "\"" + o + "\""; }).join("\n") + "\n";
   }
-  user += "\nSTART HERE (write one pick for each, exact titles):\n";
-  if (core.length) user += "- " + core.join("\n- ") + "\n";
-  if (deeper.length) {
-    user += "\nGO DEEPER (write one pick for each, exact titles, framed as a next step):\n" +
-      "- " + deeper.join("\n- ") + "\n";
-  }
-  user += "\nWrite one pick for every blend above (" + allBlends.length + " total). " +
+  user += "\nCandidate blends (choose and rank from these, exact titles):\n" +
+    candidates.map(function (c) { return "- " + c.title + (c.essence ? ": " + c.essence : ""); }).join("\n") + "\n";
+  user += "\nPut the " + nTop + " most relevant in `top` (best first) and the other " + nDeeper + " in `deeper`. " +
     (hasWritten
       ? "Make the reading and every note speak to what they wrote."
       : "Make the reading and notes personal to what they chose.");

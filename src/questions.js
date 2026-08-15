@@ -79,9 +79,9 @@ export const QUESTIONS = [
     id: 'q6',
     kind: 'open', // optional free-text; scores nothing, feeds the personalized reading
     optional: true,
-    prompt: 'Anything you want your blend to know?',
-    hint: "Optional. A word, a feeling, what today's been like. Skip if you like.",
-    placeholder: "What's on your heart right now…",
+    prompt: "What do you want to change? What's your intention? What would make it better?",
+    hint: 'Optional, but the more you share, the more your result is tailored to you. Skip if you like.',
+    placeholder: 'In your own words…',
   },
 ];
 

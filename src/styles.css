@@ -260,6 +260,8 @@
 .kq-link:hover { text-decoration: underline; }
 .kq-close { font-family: var(--kq-font-head); font-size: 1.15rem; color: var(--kq-ink); margin: 26px 0 20px; }
 .kq-restart-row { display: flex; justify-content: center; margin-top: 30px; }
+.kq-loading { display: flex; align-items: center; gap: 10px; color: var(--kq-muted); font-size: 0.95rem; padding: 6px 0 2px; font-style: italic; }
+.kq-spin-dark { display: inline-block; width: 15px; height: 15px; border: 2px solid rgba(94,115,133,0.25); border-top-color: var(--kq-slate); border-radius: 50%; animation: kq-rotate 0.7s linear infinite; flex: 0 0 auto; }
 
 .kq-spin { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff; border-radius: 50%; animation: kq-rotate 0.7s linear infinite; vertical-align: -2px; margin-right: 8px; }
 @keyframes kq-rotate { to { transform: rotate(360deg); } }
