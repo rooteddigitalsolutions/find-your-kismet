@@ -12,6 +12,7 @@
 // Cost: Haiku 4.5, max_tokens 400 (about half a cent per call). Set a monthly
 // spend limit on the API key in the Anthropic Console.
 
+const VERSION = "rerank-2"; // bump on each deploy so GET can confirm what is live
 const MODEL = "claude-sonnet-5"; // richer, more attentive prose (was claude-haiku-4-5)
 const MAX_TOKENS = 1000; // reading (~120 words) + a short "why" per recommended blend
 
@@ -71,7 +72,7 @@ export default {
     const cors = corsHeaders(origin);
     try {
       if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
-      if (request.method !== "POST") return json({ error: "POST only" }, 405, cors);
+      if (request.method !== "POST") return json({ error: "POST only", v: VERSION }, 405, cors);
 
       if (!env || !env.ANTHROPIC_API_KEY) {
         return json({ error: "ANTHROPIC_API_KEY secret is not set on this Worker" }, 500, cors);
