@@ -568,13 +568,15 @@
         "Grounding & Protection",
         "Focus & Confidence",
         "Transformation & Growth",
-        "Spiritual Connection"
+        "Spiritual Connection",
+        "Courage & Strength"
       ],
       "archetypes": [
         "anchor",
         "beacon",
         "emerge",
-        "oracle"
+        "oracle",
+        "kali"
       ],
       "format": "spray",
       "collections": [
@@ -1135,7 +1137,7 @@
     },
     "kali": {
       "diffuser": 3,
-      "spray": 3,
+      "spray": 4,
       "body": 1,
       "kit": 2
     }

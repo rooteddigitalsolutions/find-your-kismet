@@ -16,11 +16,22 @@ function productsFor(archetypeId) {
   return PRODUCTS.filter((p) => p.archetypes.includes(archetypeId));
 }
 
-// Deterministic quality rank within a candidate set: more theme overlap with the
-// archetype first, then has-essence, then has-image, then title (stable).
+// A "signature" blend to feature first for an archetype (e.g. the namesake), so
+// it always leads that result rather than getting lost in an alphabetical tie.
+const SIGNATURE = {
+  kali: 'home-spray-ahhlw', // Kali Spray leads the Kali result
+};
+
+// Deterministic quality rank within a candidate set: the archetype's signature
+// blend first, then more theme overlap, then has-essence, has-image, title.
 function rank(candidates, archetypeId) {
   const wanted = new Set(ARCHETYPES_BY_ID[archetypeId]?.themes || []);
+  const sig = SIGNATURE[archetypeId];
   return [...candidates].sort((a, b) => {
+    if (sig) {
+      if (a.slug === sig && b.slug !== sig) return -1;
+      if (b.slug === sig && a.slug !== sig) return 1;
+    }
     const ao = a.themes.filter((t) => wanted.has(t)).length;
     const bo = b.themes.filter((t) => wanted.has(t)).length;
     if (ao !== bo) return bo - ao;

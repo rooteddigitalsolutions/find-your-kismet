@@ -113,6 +113,18 @@ function extractBlurb(cleanText, essence) {
   return (kept[0] || essence || '').trim();
 }
 
+// ---- per-product theme overrides -------------------------------------------
+//  Squarespace tags are the source of truth, but a few products are tagged in a
+//  way that misses the archetype they clearly belong to. Add the missing
+//  theme(s) here, keyed by slug. BETTER long-term: fix the tag in Squarespace
+//  and re-export, then this override can be removed.
+//
+//  Kali Spray ("Kali is a mighty destructress") reads as pure Courage & Strength
+//  but wasn't tagged with it, so it never matched the Kali archetype. Add it.
+const THEME_OVERRIDES = {
+  'home-spray-ahhlw': ['Courage & Strength'], // Kali Spray -> Kali archetype
+};
+
 // ---- run --------------------------------------------------------------------
 const raw = readFileSync(CSV_PATH, 'utf8');
 const all = toObjects(parseCSV(raw));
@@ -140,6 +152,11 @@ for (const r of all) {
     .map((t) => t.trim())
     .filter(Boolean)
     .filter((t) => THEMES.includes(t));
+
+  // apply any per-product theme override (adds missing themes, no duplicates)
+  for (const extra of THEME_OVERRIDES[slug] || []) {
+    if (THEMES.includes(extra) && !themes.includes(extra)) themes.push(extra);
+  }
 
   const collections = (r['Categories'] || '')
     .split(',')
