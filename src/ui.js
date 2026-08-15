@@ -11,6 +11,7 @@ import { submitEmail } from './email.js';
 import { track } from './analytics.js';
 import { getVisibleSlugs, getVisibleSlugsWithTimeout } from './availability.js';
 import { addToCart } from './cart.js';
+import { personalizationEnabled, personalizedReading } from './personalize.js';
 
 // ---- tiny DOM helper --------------------------------------------------------
 function el(tag, attrs = {}, children = []) {
@@ -32,7 +33,7 @@ function money(p) {
 }
 
 export function mount(root) {
-  const state = { step: 0, answers: {}, result: null, email: '', logged: false };
+  const state = { step: 0, answers: {}, result: null, email: '', logged: false, aiReading: null };
 
   // Persist the ANSWERS so a refresh / return within the window restores the
   // result — recomputed against current availability, not a stale snapshot.
@@ -266,12 +267,24 @@ export function mount(root) {
     const a = ARCHETYPES_BY_ID[r.archetypeId];
     const c = COPY.archetypes[r.archetypeId];
 
+    // The reading starts as the pre-written archetype copy; if AI personalization
+    // is enabled it's swapped in-place once the Worker responds (never blocks).
+    const readingEl = el('p', { class: 'kq-reading', text: state.aiReading || c.reading });
     const nodes = [
       el('p', { class: 'kq-mirror-eyebrow', text: 'Your Kismet' }),
       el('h2', { class: 'kq-h1', text: c.mirror }),
       el('p', { class: 'kq-tagline', text: a.tagline }),
-      el('p', { class: 'kq-reading', text: c.reading }),
+      readingEl,
     ];
+    if (personalizationEnabled() && !state.aiReading) {
+      personalizedReading(state.result, state.answers).then((txt) => {
+        if (txt && readingEl.isConnected) {
+          state.aiReading = txt;
+          readingEl.classList.add('kq-reading-swap');
+          readingEl.textContent = txt;
+        }
+      });
+    }
 
     // featured set at the top
     if (r.set) {
@@ -301,6 +314,7 @@ export function mount(root) {
     state.result = null;
     state.email = '';
     state.logged = false;
+    state.aiReading = null;
     clearSaved();
     showIntro();
   }

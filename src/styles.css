@@ -200,6 +200,7 @@
   font-weight: 600; color: var(--kq-accent); margin: 0 0 8px;
 }
 .kq-reading { font-size: 1.05rem; color: var(--kq-text); margin: 0 0 8px; }
+.kq-reading-swap { animation: kq-fade 0.5s var(--kq-ease); }
 .kq-tagline { font-family: var(--kq-font-head); font-style: italic; color: var(--kq-muted); margin: 0 0 26px; }
 
 .kq-block { margin: 22px 0; padding-top: 22px; border-top: 1px solid var(--kq-line); }

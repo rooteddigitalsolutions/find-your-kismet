@@ -1,0 +1,6 @@
+name = "kismet-reading"
+main = "index.js"
+compatibility_date = "2026-01-01"
+
+# The Anthropic API key is NOT stored here — it's a secret:
+#   wrangler secret put ANTHROPIC_API_KEY
