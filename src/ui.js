@@ -32,7 +32,7 @@ function money(p) {
 }
 
 export function mount(root) {
-  const state = { step: 0, answers: {}, result: null };
+  const state = { step: 0, answers: {}, result: null, email: '', logged: false };
 
   // Persist the ANSWERS so a refresh / return within the window restores the
   // result — recomputed against current availability, not a stale snapshot.
@@ -177,11 +177,11 @@ export function mount(root) {
         return;
       }
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<span class="kq-spin"></span>Sending…';
-      submitEmail(email, state.result).finally(() => {
-        track('email_captured', { archetype: state.result.archetypeId });
-        showResults();
-      });
+      submitBtn.innerHTML = '<span class="kq-spin"></span>Revealing…';
+      // Store the email; showResults() computes the availability-filtered result
+      // and THEN logs it, so the sheet records exactly the blends they were shown.
+      state.email = email;
+      showResults();
     } }, [input, errNode, submitBtn]);
 
     swap(el('div', {}, [
@@ -253,6 +253,15 @@ export function mount(root) {
     const availableSlugs = await getVisibleSlugsWithTimeout();
     state.result = scoreAnswers(state.answers, { availableSlugs });
     saveAnswers();
+
+    // Log the submission ONCE, now that the shown (availability-filtered) blends
+    // are final — so the sheet matches exactly what the visitor saw.
+    if (state.email && !state.logged) {
+      state.logged = true;
+      submitEmail(state.email, state.result);
+      track('email_captured', { archetype: state.result.archetypeId });
+    }
+
     const r = state.result;
     const a = ARCHETYPES_BY_ID[r.archetypeId];
     const c = COPY.archetypes[r.archetypeId];
@@ -290,6 +299,8 @@ export function mount(root) {
     state.step = 0;
     state.answers = {};
     state.result = null;
+    state.email = '';
+    state.logged = false;
     clearSaved();
     showIntro();
   }
