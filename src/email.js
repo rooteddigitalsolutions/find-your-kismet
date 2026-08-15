@@ -12,7 +12,7 @@
 
 import { ARCHETYPES_BY_ID } from './archetypes.js';
 
-const SHEET_ENDPOINT = ''; // <-- paste the Apps Script Web App URL (ends with /exec)
+const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxqMiy8DErU3CjFcw2dXNQopRgw0xkDmHMSiPcK9qmn_ABtdS9E7EBTiDAJVlhXVdvRlg/exec';
 
 /**
  * @param {string} email
