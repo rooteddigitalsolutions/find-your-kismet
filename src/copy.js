@@ -33,8 +33,10 @@ export const COPY = {
   results: {
     setLabel: 'Start here: your set',
     productsLabel: 'Blends chosen for you',
-    topLabel: 'Start here: your top 3',
+    topLabel: 'Start here',
+    topSub: 'Your top 3, matched to what you shared.',
     deeperLabel: 'Go deeper',
+    deeperSub: 'When you are ready for more.',
     restart: 'Take the quiz again',
   },
 

@@ -323,14 +323,16 @@ export function mount(root) {
     const a = ARCHETYPES_BY_ID[r.archetypeId];
     const c = COPY.archetypes[r.archetypeId];
 
-    // The reading starts as the pre-written archetype copy; if AI personalization
-    // is enabled it's swapped in-place once the Worker responds (never blocks).
-    const readingEl = el('p', { class: 'kq-reading', text: deDash(state.aiReading || c.reading) });
+    // Header shows immediately. The reading + blends fill in together once the
+    // AI responds; while it works we show a personalizing animation (never the
+    // bland pre-written reading). On failure/timeout we fall back to that copy.
+    const readingSlot = el('div', { class: 'kq-reading-slot' });
+    const blendsWrap = el('div', { class: 'kq-block' });
     const nodes = [
       el('p', { class: 'kq-mirror-eyebrow', text: 'Your Kismet' }),
       el('h2', { class: 'kq-h1', text: c.mirror }),
       el('p', { class: 'kq-tagline', text: a.tagline }),
-      readingEl,
+      readingSlot,
     ];
 
     // featured set at the top (sets currently off; leads when re-enabled)
@@ -338,54 +340,63 @@ export function mount(root) {
       const setBlock = productNode(r.set, { label: COPY.results.setLabel, primaryCta: true, placement: 'set' });
       if (setBlock) nodes.push(el('div', { class: 'kq-block' }, [setBlock]));
     }
-
-    // Blends live in their own container so we can render them AFTER the AI has
-    // re-ranked them by what the visitor wrote (top 3 = most relevant, then 2 to
-    // go deeper). Until then we show a short loading line; if the AI is off or
-    // fails, we fall back to the scored order. Max 5 either way.
-    const blends = (r.products || []).slice(0, 5);
-    const blendsWrap = el('div', { class: 'kq-block' });
     nodes.push(blendsWrap);
 
-    const tierBlock = (label, items) => {
-      if (!items.length) return;
-      blendsWrap.appendChild(el('p', { class: 'kq-block-label', text: label }));
-      blendsWrap.appendChild(el('div', { class: 'kq-product-list' },
-        items.map((it) => productNode(it.product, { placement: 'product', why: it.why }))));
+    const blends = (r.products || []).slice(0, 5);
+
+    // reading slot: either the personalizing animation or the final paragraph
+    let loadingIv = null;
+    const stopLoading = () => { if (loadingIv) { clearInterval(loadingIv); loadingIv = null; } };
+    const showReading = (text) => {
+      stopLoading();
+      readingSlot.innerHTML = '';
+      readingSlot.appendChild(el('p', { class: 'kq-reading kq-reading-swap', text: deDash(text) }));
     };
+    const showPersonalizing = () => {
+      readingSlot.innerHTML = '';
+      const msgs = ['Reading what you shared', 'Finding the blends that meet you', 'Ranking your top matches'];
+      const txt = el('p', { class: 'kq-personalizing-text', text: msgs[0] });
+      readingSlot.appendChild(el('div', { class: 'kq-personalizing' }, [
+        el('div', { class: 'kq-dots' }, [el('span'), el('span'), el('span')]),
+        txt,
+      ]));
+      let i = 0;
+      loadingIv = setInterval(() => { i = (i + 1) % msgs.length; txt.textContent = msgs[i]; }, 1700);
+    };
+
+    // blend tiers: a big bold "start here" section, then a set-apart "go deeper"
+    const tierSection = (head, sub, items, isDeeper) =>
+      el('div', { class: 'kq-tier' + (isDeeper ? ' kq-deeper' : '') }, [
+        el('p', { class: 'kq-tier-head', text: head }),
+        sub ? el('p', { class: 'kq-tier-sub', text: sub }) : null,
+        el('div', { class: 'kq-product-list' },
+          items.map((it) => productNode(it.product, { placement: 'product', why: it.why }))),
+      ]);
     const renderTiers = ({ top, deeper }) => {
       blendsWrap.innerHTML = '';
-      tierBlock(COPY.results.topLabel, top);
-      tierBlock(COPY.results.deeperLabel, deeper);
+      if (top.length) blendsWrap.appendChild(tierSection(COPY.results.topLabel, COPY.results.topSub, top, false));
+      if (deeper.length) blendsWrap.appendChild(tierSection(COPY.results.deeperLabel, COPY.results.deeperSub, deeper, true));
     };
     const scoredOrder = () => ({
       top: blends.slice(0, 3).map((p) => ({ product: p, why: null })),
       deeper: blends.slice(3, 5).map((p) => ({ product: p, why: null })),
     });
 
-    if (!blends.length) {
-      // nothing to show
-    } else if (personalizationEnabled() && !state.aiSel) {
-      // loading line while the AI re-ranks + writes notes
-      blendsWrap.appendChild(el('p', { class: 'kq-block-label', text: COPY.results.topLabel }));
-      blendsWrap.appendChild(el('div', { class: 'kq-loading' }, [
-        el('span', { class: 'kq-spin-dark' }), 'Choosing the blends that fit what you shared…',
-      ]));
+    if (personalizationEnabled() && !state.aiReading && blends.length) {
+      showPersonalizing();
       personalizedReading(state.result, state.answers).then((res) => {
-        if (!res) { renderTiers(scoredOrder()); return; }
+        if (!res) { showReading(c.reading); renderTiers(scoredOrder()); return; }
         state.aiReading = res.reading;
         state.aiSel = { top: res.top, deeper: res.deeper };
-        if (readingEl.isConnected) {
-          readingEl.classList.add('kq-reading-swap');
-          readingEl.textContent = deDash(res.reading);
-        }
+        showReading(res.reading);
         renderTiers(orderProducts(blends, res.top, res.deeper));
       });
-    } else if (state.aiSel) {
-      // restore path: reuse the ranking already fetched this session
-      renderTiers(orderProducts(blends, state.aiSel.top, state.aiSel.deeper));
     } else {
-      renderTiers(scoredOrder());
+      // disabled, restored this session, or no blends: reveal immediately
+      showReading(state.aiReading || c.reading);
+      if (blends.length) {
+        renderTiers(state.aiSel ? orderProducts(blends, state.aiSel.top, state.aiSel.deeper) : scoredOrder());
+      }
     }
 
     // restart, as a rounded button

@@ -260,8 +260,37 @@
 .kq-link:hover { text-decoration: underline; }
 .kq-close { font-family: var(--kq-font-head); font-size: 1.15rem; color: var(--kq-ink); margin: 26px 0 20px; }
 .kq-restart-row { display: flex; justify-content: center; margin-top: 30px; }
-.kq-loading { display: flex; align-items: center; gap: 10px; color: var(--kq-muted); font-size: 0.95rem; padding: 6px 0 2px; font-style: italic; }
-.kq-spin-dark { display: inline-block; width: 15px; height: 15px; border: 2px solid rgba(94,115,133,0.25); border-top-color: var(--kq-slate); border-radius: 50%; animation: kq-rotate 0.7s linear infinite; flex: 0 0 auto; }
+
+/* "personalizing" animation shown while the AI writes + ranks (never bland copy) */
+.kq-reading-slot { min-height: 2.6em; }
+.kq-personalizing { display: flex; align-items: center; gap: 12px; padding: 8px 0 4px; }
+.kq-personalizing-text { margin: 0; color: var(--kq-accent); font-style: italic; font-size: 1.05rem; animation: kq-pulse 1.6s var(--kq-ease) infinite; }
+@keyframes kq-pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+.kq-dots { display: inline-flex; gap: 5px; flex: 0 0 auto; }
+.kq-dots span { width: 8px; height: 8px; border-radius: 50%; background: var(--kq-slate); animation: kq-bounce 1.2s var(--kq-ease) infinite; }
+.kq-dots span:nth-child(2) { animation-delay: 0.15s; }
+.kq-dots span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes kq-bounce { 0%, 80%, 100% { transform: translateY(0); opacity: 0.5; } 40% { transform: translateY(-6px); opacity: 1; } }
+
+/* blend tiers: a prominent "start here", then a set-apart "go deeper" block */
+.kq-tier { margin-top: 26px; }
+.kq-tier:first-child { margin-top: 6px; }
+.kq-tier-head {
+  font-family: var(--kq-font-head);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 4.5vw, 1.7rem);
+  line-height: 1.12;
+  color: var(--kq-ink);
+  margin: 0 0 4px;
+}
+.kq-tier-sub { color: var(--kq-muted); font-size: 0.96rem; margin: 0 0 16px; }
+.kq-deeper {
+  margin-top: 34px;
+  background: rgba(211, 199, 155, 0.20); /* soft sand tint of --kq-sand */
+  border: 1px solid rgba(211, 199, 155, 0.55);
+  border-radius: var(--kq-radius);
+  padding: 22px 22px 24px;
+}
 
 .kq-spin { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff; border-radius: 50%; animation: kq-rotate 0.7s linear infinite; vertical-align: -2px; margin-right: 8px; }
 @keyframes kq-rotate { to { transform: rotate(360deg); } }
