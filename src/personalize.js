@@ -12,7 +12,7 @@
 import { ARCHETYPES_BY_ID } from './archetypes.js';
 
 // Paste the deployed Worker URL here (…workers.dev). Empty = feature off.
-const READING_ENDPOINT = '';
+const READING_ENDPOINT = 'https://color-of-kismet-quiz.adam-b72.workers.dev';
 
 const TIMEOUT_MS = 6000;
 
