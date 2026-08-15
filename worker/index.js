@@ -9,11 +9,11 @@
 //   3. Settings -> Variables and Secrets -> add Secret ANTHROPIC_API_KEY.
 //   4. Open the Worker URL in a browser. It should show {"error":"POST only"}.
 //
-// Cost: Haiku 4.5, max_tokens 400 (about half a cent per call). Set a monthly
+// Cost: Sonnet 5, max_tokens 1000 (about 1.5 cents per call). Set a monthly
 // spend limit on the API key in the Anthropic Console.
 
 const VERSION = "rerank-2"; // bump on each deploy so GET can confirm what is live
-const MODEL = "claude-sonnet-5"; // richer, more attentive prose (was claude-haiku-4-5)
+const MODEL = "claude-sonnet-5"; // the active model. Swap to "claude-haiku-4-5" for ~1/3 the cost, less nuance.
 const MAX_TOKENS = 1000; // reading (~120 words) + a short "why" per recommended blend
 
 // Forced tool = guaranteed JSON shape back (no fragile parsing of free text).
