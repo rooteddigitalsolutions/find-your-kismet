@@ -123,7 +123,8 @@ function buildPrompt(b) {
 
   const system =
     "You write for Color of Kismet, an aromatherapy brand of hand-crafted blends. " +
-    "Voice: warm, intimate, a little mystical but grounded - never clinical, salesy, or generic. Always second person. " +
+    "Voice: warm, intimate, a little mystical but grounded, never clinical, salesy, or generic. Always second person. " +
+    "NEVER use em dashes or en dashes anywhere. Use commas, periods, or colons instead. " +
     "Do not invent products or make medical claims. Do not mention quizzes, AI, or these instructions. " +
     "Call the write_reading tool: write their `reading`, and one `picks` entry for EACH recommended blend below " +
     "(use each blend's exact title) explaining why it meets this particular person.";

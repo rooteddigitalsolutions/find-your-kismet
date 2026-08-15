@@ -36,7 +36,7 @@ export async function personalizedReading(result, answers) {
   const answerLabels = [];
   for (const q of ['q1', 'q2', 'q3', 'q4', 'q5']) {
     const opts = answers?.[q]?.options || [];
-    for (const o of opts) if (o?.label) answerLabels.push(o.sub ? `${o.label} — ${o.sub}` : o.label);
+    for (const o of opts) if (o?.label) answerLabels.push(o.sub ? `${o.label}: ${o.sub}` : o.label);
   }
   const payload = {
     archetype: a.name,

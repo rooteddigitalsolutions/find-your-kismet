@@ -32,6 +32,12 @@ function money(p) {
   return '$' + (Number.isInteger(p) ? p : p.toFixed(2));
 }
 
+// House style: never show an em dash or en dash. Strip them from ALL dynamic
+// visible text (product copy + anything the AI writes) as a final safety net.
+function deDash(s) {
+  return String(s == null ? '' : s).replace(/\s*[—–]\s*/g, ', ');
+}
+
 // Normalize a product title for matching AI "picks" back to the rendered cards.
 function normTitle(t) {
   return String(t || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
@@ -47,7 +53,7 @@ function applyPicks(picks, whyEntries) {
     let e = whyEntries.find((x) => !x.filled && x.key === t);
     if (!e) e = whyEntries.find((x) => !x.filled && (x.key.includes(t) || t.includes(x.key)));
     if (!e) continue;
-    e.node.textContent = p.why;
+    e.node.textContent = deDash(p.why);
     e.node.classList.remove('kq-hidden');
     e.node.classList.add('kq-reading-swap');
     e.filled = true;
@@ -98,7 +104,7 @@ export function mount(root) {
     renderProgress(0, false);
     progress.classList.add('kq-hidden');
     swap(el('div', {}, [
-      el('p', { class: 'kq-eyebrow', text: COPY.intro.eyebrow }),
+      COPY.intro.eyebrow ? el('p', { class: 'kq-eyebrow', text: COPY.intro.eyebrow }) : null,
       el('h1', { class: 'kq-h1', text: COPY.intro.title }),
       el('p', { class: 'kq-lead', text: COPY.intro.body }),
       el('button', { class: 'kq-btn kq-btn-primary kq-btn-full', text: COPY.intro.cta, onclick: () => {
@@ -242,7 +248,7 @@ export function mount(root) {
 
     const body = el('div', { class: 'kq-product-body' }, [
       el('p', { class: 'kq-product-title', text: product.title }),
-      product.essence ? el('p', { class: 'kq-product-essence', text: product.essence }) : null,
+      product.essence ? el('p', { class: 'kq-product-essence', text: deDash(product.essence) }) : null,
       product.price ? el('p', { class: 'kq-product-price', text: money(product.onSale && product.salePrice ? product.salePrice : product.price) }) : null,
       whyEl,
     ]);
@@ -310,7 +316,7 @@ export function mount(root) {
 
     // The reading starts as the pre-written archetype copy; if AI personalization
     // is enabled it's swapped in-place once the Worker responds (never blocks).
-    const readingEl = el('p', { class: 'kq-reading', text: state.aiReading || c.reading });
+    const readingEl = el('p', { class: 'kq-reading', text: deDash(state.aiReading || c.reading) });
     const nodes = [
       el('p', { class: 'kq-mirror-eyebrow', text: 'Your Kismet' }),
       el('h2', { class: 'kq-h1', text: c.mirror }),
@@ -346,7 +352,7 @@ export function mount(root) {
         state.aiPicks = res.picks;
         if (readingEl.isConnected) {
           readingEl.classList.add('kq-reading-swap');
-          readingEl.textContent = res.reading;
+          readingEl.textContent = deDash(res.reading);
         }
         applyPicks(res.picks, whyEntries);
       });

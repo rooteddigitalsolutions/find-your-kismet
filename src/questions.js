@@ -80,7 +80,7 @@ export const QUESTIONS = [
     kind: 'open', // optional free-text; scores nothing, feeds the personalized reading
     optional: true,
     prompt: 'Anything you want your blend to know?',
-    hint: "Optional — a word, a feeling, what today's been like. Skip if you like.",
+    hint: "Optional. A word, a feeling, what today's been like. Skip if you like.",
     placeholder: "What's on your heart right now…",
   },
 ];
