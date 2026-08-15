@@ -334,13 +334,20 @@ export function mount(root) {
       if (setBlock) nodes.push(el('div', { class: 'kq-block' }, [setBlock]));
     }
 
-    // the highlighted blends
-    if (r.products?.length) {
-      nodes.push(el('div', { class: 'kq-block' }, [
-        el('p', { class: 'kq-block-label', text: COPY.results.productsLabel }),
-        el('div', { class: 'kq-product-list' },
-          r.products.map((p) => productNode(p, { placement: 'product', whyEntries }))),
-      ]));
+    // Blends in two tiers: a top 3 to start with, then 2 to go deeper. When a
+    // set is featured we skip tiers (it already leads). Max 5 either way.
+    const blends = r.products || [];
+    const blockFor = (label, list) => el('div', { class: 'kq-block' }, [
+      el('p', { class: 'kq-block-label', text: label }),
+      el('div', { class: 'kq-product-list' },
+        list.map((p) => productNode(p, { placement: 'product', whyEntries }))),
+    ]);
+    if (r.set) {
+      if (blends.length) nodes.push(blockFor(COPY.results.productsLabel, blends.slice(0, 5)));
+    } else if (blends.length) {
+      nodes.push(blockFor(COPY.results.topLabel, blends.slice(0, 3)));
+      const deeper = blends.slice(3, 5);
+      if (deeper.length) nodes.push(blockFor(COPY.results.deeperLabel, deeper));
     }
 
     // AI personalization: swap the reading AND fill the per-blend notes. Pure
@@ -361,9 +368,10 @@ export function mount(root) {
       applyPicks(state.aiPicks, whyEntries);
     }
 
-    // reassurance close
-    nodes.push(el('p', { class: 'kq-close', text: c.close }));
-    nodes.push(el('button', { class: 'kq-back', text: COPY.results.restart, onclick: restart }));
+    // restart, as a rounded button
+    nodes.push(el('div', { class: 'kq-restart-row' }, [
+      el('button', { class: 'kq-btn kq-btn-ghost', type: 'button', text: COPY.results.restart, onclick: restart }),
+    ]));
 
     swap(el('div', {}, nodes));
   }

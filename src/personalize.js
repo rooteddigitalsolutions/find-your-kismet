@@ -14,7 +14,7 @@ import { ARCHETYPES_BY_ID } from './archetypes.js';
 // Paste the deployed Worker URL here (…workers.dev). Empty = feature off.
 const READING_ENDPOINT = 'https://color-of-kismet-quiz.adam-b72.workers.dev';
 
-const TIMEOUT_MS = 6000;
+const TIMEOUT_MS = 15000; // Sonnet is slower than Haiku; canned copy shows until this returns
 
 export function personalizationEnabled() {
   return !!READING_ENDPOINT;
@@ -38,12 +38,17 @@ export async function personalizedReading(result, answers) {
     const opts = answers?.[q]?.options || [];
     for (const o of opts) if (o?.label) answerLabels.push(o.sub ? `${o.label}: ${o.sub}` : o.label);
   }
+  // Split the recommendations into the two tiers the results page shows, so the
+  // AI can frame the "go deeper" notes as a next step.
+  const titles = (result?.products || []).map((p) => p.title);
   const payload = {
     archetype: a.name,
     tagline: a.tagline,
     answers: answerLabels,
     others: (result?.others || []).map((o) => o.text).filter(Boolean), // includes the open-ended Q6
-    blends: (result?.products || []).map((p) => p.title),
+    core: titles.slice(0, 3),
+    deeper: titles.slice(3, 5),
+    blends: titles.slice(0, 5), // back-comp: older Worker reads this flat list
     // NOTE: email is deliberately NOT sent — the reading needs none of it.
   };
 

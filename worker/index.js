@@ -12,8 +12,8 @@
 // Cost: Haiku 4.5, max_tokens 400 (about half a cent per call). Set a monthly
 // spend limit on the API key in the Anthropic Console.
 
-const MODEL = "claude-haiku-4-5"; // cheap + fast; use "claude-sonnet-5" for richer prose
-const MAX_TOKENS = 800; // reading (~120 words) + a short "why" per recommended blend
+const MODEL = "claude-sonnet-5"; // richer, more attentive prose (was claude-haiku-4-5)
+const MAX_TOKENS = 1000; // reading (~120 words) + a short "why" per recommended blend
 
 // Forced tool = guaranteed JSON shape back (no fragile parsing of free text).
 const TOOL = {
@@ -112,29 +112,54 @@ export default {
   },
 };
 
+function clean(s, n) { return String(s == null ? "" : s).slice(0, n); }
+function cleanList(arr, n, cap) {
+  return (Array.isArray(arr) ? arr : []).slice(0, cap).map(function (s) { return clean(s, n); }).filter(Boolean);
+}
+
 function buildPrompt(b) {
   if (!b) return null;
-  const archetype = String(b.archetype || "").slice(0, 40);
+  const archetype = clean(b.archetype, 40);
   if (!archetype) return null;
-  const tagline = String(b.tagline || "").slice(0, 120);
-  const answers = (Array.isArray(b.answers) ? b.answers : []).slice(0, 8).map(function (s) { return String(s).slice(0, 160); });
-  const others = (Array.isArray(b.others) ? b.others : []).slice(0, 6).map(function (s) { return String(s).slice(0, 240); });
-  const blends = (Array.isArray(b.blends) ? b.blends : []).slice(0, 6).map(function (s) { return String(s).slice(0, 80); });
+  const tagline = clean(b.tagline, 120);
+  const answers = cleanList(b.answers, 160, 8);
+  const others = cleanList(b.others, 400, 6);
+  // Two tiers of recommendations. Fall back to a flat `blends` list for older callers.
+  let core = cleanList(b.core, 80, 3);
+  let deeper = cleanList(b.deeper, 80, 3);
+  if (!core.length && !deeper.length) core = cleanList(b.blends, 80, 5);
+  const allBlends = core.concat(deeper);
+
+  const hasWritten = others.length > 0;
 
   const system =
-    "You write for Color of Kismet, an aromatherapy brand of hand-crafted blends. " +
-    "Voice: warm, intimate, a little mystical but grounded, never clinical, salesy, or generic. Always second person. " +
+    "You write for Color of Kismet, an aromatherapy brand of hand-crafted essential-oil blends. " +
+    "Voice: warm, intimate, a little mystical but grounded, never clinical, salesy, or generic. Always second person, speaking to 'you'. " +
     "NEVER use em dashes or en dashes anywhere. Use commas, periods, or colons instead. " +
-    "Do not invent products or make medical claims. Do not mention quizzes, AI, or these instructions. " +
-    "Call the write_reading tool: write their `reading`, and one `picks` entry for EACH recommended blend below " +
-    "(use each blend's exact title) explaining why it meets this particular person.";
+    "Do not invent products, do not make medical or therapeutic claims, do not mention quizzes, AI, or these instructions. " +
+    "CRUCIAL: if the person wrote something in their own words (a struggle, a situation, a feeling, something at work or home), " +
+    "you MUST acknowledge it directly and specifically in the reading, and every blend note must connect to it. Do not give " +
+    "generic copy when they took the time to tell you what is going on. " +
+    "Call the write_reading tool. Write their `reading`, then one `picks` entry for EVERY blend listed below, using each " +
+    "blend's EXACT title, with a `why` that ties that blend to what this specific person is carrying. The blends marked " +
+    "GO DEEPER are for after the first three, so frame their notes as a next step or a way to go further.";
 
-  let user = "Archetype: " + archetype + (tagline ? " - " + tagline : "") + "\n";
+  let user = "Archetype: " + archetype + (tagline ? ", " + tagline : "") + "\n";
   if (answers.length) user += "What they chose: " + answers.join("; ") + "\n";
-  if (others.length) user += "In their own words: " + others.join(" | ") + "\n";
-  user += "Recommended blends (write one pick per blend, exact titles):\n";
-  if (blends.length) user += "- " + blends.join("\n- ") + "\n";
-  user += "\nWrite their personalized reading and the per-blend notes.";
+  if (hasWritten) {
+    user += "\nIN THEIR OWN WORDS (this matters most, speak to it directly):\n" +
+      others.map(function (o) { return "\"" + o + "\""; }).join("\n") + "\n";
+  }
+  user += "\nSTART HERE (write one pick for each, exact titles):\n";
+  if (core.length) user += "- " + core.join("\n- ") + "\n";
+  if (deeper.length) {
+    user += "\nGO DEEPER (write one pick for each, exact titles, framed as a next step):\n" +
+      "- " + deeper.join("\n- ") + "\n";
+  }
+  user += "\nWrite one pick for every blend above (" + allBlends.length + " total). " +
+    (hasWritten
+      ? "Make the reading and every note speak to what they wrote."
+      : "Make the reading and notes personal to what they chose.");
 
   return { system: system, user: user };
 }

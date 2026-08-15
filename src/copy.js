@@ -33,7 +33,9 @@ export const COPY = {
   results: {
     setLabel: 'Start here: your set',
     productsLabel: 'Blends chosen for you',
-    restart: 'Take it again',
+    topLabel: 'Start here: your top 3',
+    deeperLabel: 'Go deeper',
+    restart: 'Take the quiz again',
   },
 
   // ---- the six archetype readings ------------------------------------------

@@ -259,6 +259,7 @@
 .kq-link { color: var(--kq-accent); font-weight: 600; text-decoration: none; }
 .kq-link:hover { text-decoration: underline; }
 .kq-close { font-family: var(--kq-font-head); font-size: 1.15rem; color: var(--kq-ink); margin: 26px 0 20px; }
+.kq-restart-row { display: flex; justify-content: center; margin-top: 30px; }
 
 .kq-spin { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff; border-radius: 50%; animation: kq-rotate 0.7s linear infinite; vertical-align: -2px; margin-right: 8px; }
 @keyframes kq-rotate { to { transform: rotate(360deg); } }

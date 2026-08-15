@@ -104,7 +104,7 @@ export function scoreAnswers(answers, opts = {}) {
   //    When sets are hidden we show 6 blends to fill the space the set left.
   let set = FEATURE_SETS ? (SETS[archetypeId] || null) : null;
   if (set && availableSlugs && !availableSlugs.has(set.slug)) set = null; // set went offline
-  const products = topBlends(archetypeId, formats, set ? 5 : 6, availableSlugs);
+  const products = topBlends(archetypeId, formats, 5, availableSlugs);
   const wantsRitual = formats.includes('kit');
 
   return {
