@@ -146,7 +146,13 @@
   border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg);
 }
 .kq-check-label { flex: 1; }
+/* scannable option: bold lead + tiny muted gloss underneath */
+.kq-check-lead { display: block; font-weight: 600; font-size: 1rem; line-height: 1.3; }
+.kq-check.is-selected .kq-check-lead { font-weight: 700; }
+.kq-check-sub { display: block; font-size: 0.82rem; color: var(--kq-muted); margin-top: 2px; line-height: 1.35; }
+.kq-option.is-selected { font-weight: 400; } /* lead carries the weight, not the whole label */
 .kq-other { margin-top: 4px; margin-bottom: 0; }
+.kq-textarea { min-height: 104px; resize: vertical; line-height: 1.5; }
 
 /* buttons */
 .kq-btn {
@@ -218,6 +224,27 @@
 .kq-product-title { font-family: var(--kq-font-head); font-weight: 600; font-size: 1.2rem; margin: 0 0 4px; color: var(--kq-ink); }
 .kq-product-essence { color: var(--kq-muted); font-size: 0.95rem; margin: 0 0 10px; }
 .kq-product-price { font-size: 0.9rem; color: var(--kq-text); font-weight: 600; }
+/* personalized "why this fits you" note, filled in by the AI reading */
+.kq-product-why {
+  margin: 10px 0 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--kq-text);
+  background: var(--kq-accent-soft);
+  border-left: 3px solid var(--kq-sand);
+  padding: 9px 12px;
+  border-radius: 8px;
+}
+.kq-product-why::before {
+  content: 'Why this fits you';
+  display: block;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--kq-accent);
+  margin-bottom: 3px;
+}
 .kq-fallback-note {
   background: var(--kq-accent-soft); border-left: 3px solid var(--kq-sand);
   padding: 10px 14px; border-radius: 8px; font-size: 0.88rem; color: var(--kq-text);

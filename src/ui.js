@@ -32,8 +32,30 @@ function money(p) {
   return '$' + (Number.isInteger(p) ? p : p.toFixed(2));
 }
 
+// Normalize a product title for matching AI "picks" back to the rendered cards.
+function normTitle(t) {
+  return String(t || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+}
+
+// Drop each AI "why" note into the matching product card (exact title first,
+// then a tolerant contains-match). Idempotent — safe to call more than once.
+function applyPicks(picks, whyEntries) {
+  if (!Array.isArray(picks) || !whyEntries) return;
+  for (const p of picks) {
+    if (!p || !p.why) continue;
+    const t = normTitle(p.title);
+    let e = whyEntries.find((x) => !x.filled && x.key === t);
+    if (!e) e = whyEntries.find((x) => !x.filled && (x.key.includes(t) || t.includes(x.key)));
+    if (!e) continue;
+    e.node.textContent = p.why;
+    e.node.classList.remove('kq-hidden');
+    e.node.classList.add('kq-reading-swap');
+    e.filled = true;
+  }
+}
+
 export function mount(root) {
-  const state = { step: 0, answers: {}, result: null, email: '', logged: false, aiReading: null };
+  const state = { step: 0, answers: {}, result: null, email: '', logged: false, aiReading: null, aiPicks: null };
 
   // Persist the ANSWERS so a refresh / return within the window restores the
   // result — recomputed against current availability, not a stale snapshot.
@@ -98,7 +120,30 @@ export function mount(root) {
     renderProgress(state.step, false);
     const q = QUESTIONS[state.step];
     const ans = ensureAnswer(q.id);
+    const isLast = state.step >= TOTAL_STEPS - 1;
+    const ctaText = isLast ? 'See my result' : 'Continue';
 
+    // ---- open-ended reflection (optional, skippable) ------------------------
+    if (q.kind === 'open') {
+      const ta = el('textarea', {
+        class: 'kq-input kq-textarea', rows: '4',
+        placeholder: q.placeholder || '', 'aria-label': q.prompt,
+      });
+      ta.value = ans.other || '';
+      ta.addEventListener('input', () => { ans.other = ta.value; });
+      const nodes = [
+        el('p', { class: 'kq-qnum', text: `Question ${state.step + 1} of ${TOTAL_STEPS} · optional` }),
+        el('h2', { class: 'kq-h2', text: q.prompt }),
+        q.hint ? el('p', { class: 'kq-lead', text: q.hint }) : null,
+        ta,
+        el('button', { class: 'kq-btn kq-btn-primary kq-btn-full', style: 'margin-top:8px;', text: ctaText, onclick: () => advance(q) }),
+      ];
+      if (state.step > 0) nodes.push(el('button', { class: 'kq-back', text: '← Back', onclick: () => { state.step--; showQuestion(); } }));
+      swap(el('div', {}, nodes));
+      return;
+    }
+
+    // ---- multi-select questions (scannable lead + gloss) --------------------
     const optionButtons = q.options.map((opt) => {
       const btn = el('button', {
         class: 'kq-option kq-check' + (ans.options.includes(opt) ? ' is-selected' : ''),
@@ -106,7 +151,10 @@ export function mount(root) {
         'aria-pressed': ans.options.includes(opt) ? 'true' : 'false',
       }, [
         el('span', { class: 'kq-check-box', 'aria-hidden': 'true' }),
-        el('span', { class: 'kq-check-label', text: opt.label }),
+        el('span', { class: 'kq-check-label' }, [
+          el('span', { class: 'kq-check-lead', text: opt.label }),
+          opt.sub ? el('span', { class: 'kq-check-sub', text: opt.sub }) : null,
+        ]),
       ]);
       btn.addEventListener('click', () => {
         const i = ans.options.indexOf(opt);
@@ -119,18 +167,6 @@ export function mount(root) {
 
     const options = el('div', { class: 'kq-options' }, optionButtons);
 
-    // "Other" free-text row
-    if (q.other) {
-      const otherInput = el('input', {
-        class: 'kq-input kq-other', type: 'text',
-        placeholder: q.otherPlaceholder || 'Something else — type it here',
-        value: ans.other || '',
-        'aria-label': 'Other — type your own answer',
-      });
-      otherInput.addEventListener('input', () => { ans.other = otherInput.value; });
-      options.appendChild(otherInput);
-    }
-
     const nodes = [
       el('p', { class: 'kq-qnum', text: `Question ${state.step + 1} of ${TOTAL_STEPS} · choose any that fit` }),
       el('h2', { class: 'kq-h2', text: q.prompt }),
@@ -138,7 +174,7 @@ export function mount(root) {
       el('button', {
         class: 'kq-btn kq-btn-primary kq-btn-full',
         style: 'margin-top:22px;',
-        text: state.step < TOTAL_STEPS - 1 ? 'Continue' : 'See my result',
+        text: ctaText,
         onclick: () => advance(q),
       }),
     ];
@@ -194,16 +230,21 @@ export function mount(root) {
   }
 
   // ---- results --------------------------------------------------------------
-  function productNode(product, { label, primaryCta, placement, note } = {}) {
+  function productNode(product, { label, primaryCta, placement, note, whyEntries } = {}) {
     if (!product) return null;
     const img = product.image
       ? el('img', { class: 'kq-product-img', src: product.image, alt: product.title, loading: 'lazy' })
       : el('div', { class: 'kq-product-img is-empty', text: '❋' });
 
+    // Personalized "why this fits you" note — hidden until the AI fills it in.
+    const whyEl = el('p', { class: 'kq-product-why kq-hidden' });
+    if (whyEntries) whyEntries.push({ key: normTitle(product.title), node: whyEl, filled: false });
+
     const body = el('div', { class: 'kq-product-body' }, [
       el('p', { class: 'kq-product-title', text: product.title }),
       product.essence ? el('p', { class: 'kq-product-essence', text: product.essence }) : null,
       product.price ? el('p', { class: 'kq-product-price', text: money(product.onSale && product.salePrice ? product.salePrice : product.price) }) : null,
+      whyEl,
     ]);
 
     const row = el('div', { class: 'kq-product' }, [img, body]);
@@ -276,29 +317,42 @@ export function mount(root) {
       el('p', { class: 'kq-tagline', text: a.tagline }),
       readingEl,
     ];
-    if (personalizationEnabled() && !state.aiReading) {
-      personalizedReading(state.result, state.answers).then((txt) => {
-        if (txt && readingEl.isConnected) {
-          state.aiReading = txt;
-          readingEl.classList.add('kq-reading-swap');
-          readingEl.textContent = txt;
-        }
-      });
-    }
+
+    // Collects each product card's "why this fits you" slot so the AI response
+    // can drop personalized notes into the right cards.
+    const whyEntries = [];
 
     // featured set at the top
     if (r.set) {
-      const setBlock = productNode(r.set, { label: COPY.results.setLabel, primaryCta: true, placement: 'set' });
+      const setBlock = productNode(r.set, { label: COPY.results.setLabel, primaryCta: true, placement: 'set', whyEntries });
       if (setBlock) nodes.push(el('div', { class: 'kq-block' }, [setBlock]));
     }
 
-    // the five highlighted blends
+    // the highlighted blends
     if (r.products?.length) {
       nodes.push(el('div', { class: 'kq-block' }, [
         el('p', { class: 'kq-block-label', text: COPY.results.productsLabel }),
         el('div', { class: 'kq-product-list' },
-          r.products.map((p) => productNode(p, { placement: 'product' }))),
+          r.products.map((p) => productNode(p, { placement: 'product', whyEntries }))),
       ]));
+    }
+
+    // AI personalization: swap the reading AND fill the per-blend notes. Pure
+    // progressive enhancement — on any failure the pre-written copy just stays.
+    if (personalizationEnabled() && !state.aiReading) {
+      personalizedReading(state.result, state.answers).then((res) => {
+        if (!res) return;
+        state.aiReading = res.reading;
+        state.aiPicks = res.picks;
+        if (readingEl.isConnected) {
+          readingEl.classList.add('kq-reading-swap');
+          readingEl.textContent = res.reading;
+        }
+        applyPicks(res.picks, whyEntries);
+      });
+    } else if (state.aiPicks) {
+      // restore path: reading + picks already fetched this session
+      applyPicks(state.aiPicks, whyEntries);
     }
 
     // reassurance close
@@ -315,6 +369,7 @@ export function mount(root) {
     state.email = '';
     state.logged = false;
     state.aiReading = null;
+    state.aiPicks = null;
     clearSaved();
     showIntro();
   }

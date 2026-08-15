@@ -19,7 +19,7 @@ export const COPY = {
     eyebrow: 'A short ritual',
     title: 'Find Your Kismet',
     body:
-      "Five questions, two minutes. Not a personality test — a way of listening " +
+      "A few questions, two minutes. Not a personality test — a way of listening " +
       "for what you're actually carrying right now, and the blend that meets it.",
     cta: 'Begin',
   },

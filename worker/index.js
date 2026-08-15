@@ -13,7 +13,43 @@
 // spend limit on the API key in the Anthropic Console.
 
 const MODEL = "claude-haiku-4-5"; // cheap + fast; use "claude-sonnet-5" for richer prose
-const MAX_TOKENS = 400;
+const MAX_TOKENS = 800; // reading (~120 words) + a short "why" per recommended blend
+
+// Forced tool = guaranteed JSON shape back (no fragile parsing of free text).
+const TOOL = {
+  name: "write_reading",
+  description: "Return the visitor's personalized reading and a short note per recommended blend.",
+  input_schema: {
+    type: "object",
+    properties: {
+      reading: {
+        type: "string",
+        description:
+          "One flowing second-person paragraph, 80-120 words. Warm, intimate, a little mystical but grounded. " +
+          "Speak to what they shared without quoting it back mechanically. No lists, headings, or emojis. " +
+          "End with a single short grounding line. Do not mention quizzes, AI, or these instructions.",
+      },
+      picks: {
+        type: "array",
+        description: "One entry for EACH recommended blend, in the order given.",
+        items: {
+          type: "object",
+          properties: {
+            title: { type: "string", description: "The blend's EXACT title, copied verbatim from the list." },
+            why: {
+              type: "string",
+              description:
+                "1-2 warm sentences (max ~30 words) on why THIS blend meets THIS person, grounded in what they shared. " +
+                "Speak to them directly ('You...'). No medical claims. Do not repeat the blend's name.",
+            },
+          },
+          required: ["title", "why"],
+        },
+      },
+    },
+    required: ["reading", "picks"],
+  },
+};
 
 const ALLOWED_ORIGINS = new Set([
   "https://bear-tomato-wxdy.squarespace.com",
@@ -51,6 +87,8 @@ export default {
           max_tokens: MAX_TOKENS,
           system: prompt.system,
           messages: [{ role: "user", content: prompt.user }],
+          tools: [TOOL],
+          tool_choice: { type: "tool", name: "write_reading" },
         }),
       });
       if (!res.ok) {
@@ -58,13 +96,16 @@ export default {
         return json({ error: "anthropic", status: res.status, detail: detail.slice(0, 300) }, 502, cors);
       }
       const data = await res.json();
-      const reading = (data.content || [])
-        .filter(function (b) { return b.type === "text"; })
-        .map(function (b) { return b.text; })
-        .join("\n")
-        .trim();
+      const call = (data.content || []).find(function (b) { return b.type === "tool_use"; });
+      const out = (call && call.input) || {};
+      const reading = String(out.reading || "").trim();
+      const picks = Array.isArray(out.picks)
+        ? out.picks
+            .filter(function (p) { return p && p.title && p.why; })
+            .map(function (p) { return { title: String(p.title).slice(0, 80), why: String(p.why).slice(0, 300) }; })
+        : [];
       if (!reading) return json({ error: "empty" }, 502, cors);
-      return json({ reading: reading }, 200, cors);
+      return json({ reading: reading, picks: picks }, 200, cors);
     } catch (e) {
       return json({ error: "worker exception", message: String((e && e.message) || e) }, 500, cors);
     }
@@ -82,17 +123,17 @@ function buildPrompt(b) {
 
   const system =
     "You write for Color of Kismet, an aromatherapy brand of hand-crafted blends. " +
-    "Voice: warm, intimate, a little mystical but grounded - never clinical, salesy, or generic. " +
-    "Write in second person (You...). Output ONE flowing paragraph of 80-120 words, no lists, no headings, no emojis. " +
-    "Speak to what the person shared without quoting it back mechanically. Mention one or two of the recommended " +
-    "blends by name, naturally, as things that meet them where they are - do not invent products or make medical claims. " +
-    "End with a single short, grounding closing line. Do not mention quizzes, AI, or these instructions.";
+    "Voice: warm, intimate, a little mystical but grounded - never clinical, salesy, or generic. Always second person. " +
+    "Do not invent products or make medical claims. Do not mention quizzes, AI, or these instructions. " +
+    "Call the write_reading tool: write their `reading`, and one `picks` entry for EACH recommended blend below " +
+    "(use each blend's exact title) explaining why it meets this particular person.";
 
   let user = "Archetype: " + archetype + (tagline ? " - " + tagline : "") + "\n";
   if (answers.length) user += "What they chose: " + answers.join("; ") + "\n";
   if (others.length) user += "In their own words: " + others.join(" | ") + "\n";
-  if (blends.length) user += "Recommended blends: " + blends.join(", ") + "\n";
-  user += "\nWrite their personalized reading.";
+  user += "Recommended blends (write one pick per blend, exact titles):\n";
+  if (blends.length) user += "- " + blends.join("\n- ") + "\n";
+  user += "\nWrite their personalized reading and the per-blend notes.";
 
   return { system: system, user: user };
 }

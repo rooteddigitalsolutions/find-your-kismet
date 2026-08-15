@@ -22,24 +22,27 @@ export function personalizationEnabled() {
 
 /**
  * @param {Object} result  the scoreAnswers() payload
- * @param {Object} answers the raw answers map (for the free-text "Other")
- * @returns {Promise<string|null>} the personalized reading, or null on any failure
+ * @param {Object} answers the raw answers map (options + open-ended free-text)
+ * @returns {Promise<{reading:string, picks:Array<{title:string,why:string}>}|null>}
+ *          the personalized reading + per-blend notes, or null on any failure
  */
 export async function personalizedReading(result, answers) {
   if (!READING_ENDPOINT) return null;
   const a = ARCHETYPES_BY_ID[result?.archetypeId];
   if (!a) return null;
 
+  // Send the full nuance of each chosen option (lead + gloss) so the AI has
+  // more to work with than a two-word label.
   const answerLabels = [];
-  for (const q of ['q1', 'q2', 'q3', 'q4']) {
+  for (const q of ['q1', 'q2', 'q3', 'q4', 'q5']) {
     const opts = answers?.[q]?.options || [];
-    for (const o of opts) if (o?.label) answerLabels.push(o.label);
+    for (const o of opts) if (o?.label) answerLabels.push(o.sub ? `${o.label} — ${o.sub}` : o.label);
   }
   const payload = {
     archetype: a.name,
     tagline: a.tagline,
     answers: answerLabels,
-    others: (result?.others || []).map((o) => o.text).filter(Boolean),
+    others: (result?.others || []).map((o) => o.text).filter(Boolean), // includes the open-ended Q6
     blends: (result?.products || []).map((p) => p.title),
     // NOTE: email is deliberately NOT sent — the reading needs none of it.
   };
@@ -56,7 +59,13 @@ export async function personalizedReading(result, answers) {
     if (!res.ok) return null;
     const data = await res.json();
     const reading = (data && data.reading) ? String(data.reading).trim() : '';
-    return reading || null;
+    if (!reading) return null;
+    const picks = Array.isArray(data.picks)
+      ? data.picks
+          .filter((p) => p && p.title && p.why)
+          .map((p) => ({ title: String(p.title).trim(), why: String(p.why).trim() }))
+      : [];
+    return { reading, picks };
   } catch (_) {
     return null;
   } finally {

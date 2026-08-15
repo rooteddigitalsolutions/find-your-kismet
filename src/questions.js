@@ -1,94 +1,89 @@
 // ============================================================================
 //  QUESTIONS  —  DRAFT COPY, FOR ANGELYN'S REVIEW
 // ----------------------------------------------------------------------------
-//  Six questions. Q1–Q3 score archetypes (via theme tags). Q4 adds context
-//  weight. Q5 sets the format filter. Q6 sets depth (unlocks Emerge / Kali).
+//  Q1–Q3 score archetypes (via theme tags). Q4 adds context weight. Q5 sets the
+//  format filter. Q6 is an OPTIONAL open-ended reflection (skippable) — it
+//  scores nothing, but its text feeds the personalized AI reading.
 //
-//  Every question is MULTI-SELECT (`multi: true`) — the visitor can choose any
-//  number of answers, and each selected answer scores. Every question also has
-//  an "Other" free-text box (`other: true`); typed text is captured but scores
-//  nothing (there's no reliable way to map free text to an archetype).
-//
-//  `themes` on an option are the product theme-tags it scores toward (see
-//  src/archetypes.js). Keep every theme string spelled exactly as in the CSV.
+//  Scoring questions are MULTI-SELECT (`multi: true`) — choose any number; each
+//  selected answer scores. Options are written to SCAN: a short bold `label`
+//  (the lead) plus a tiny muted `sub` gloss. `themes` are the product theme-tags
+//  the option scores toward (see src/archetypes.js) — keep every theme string
+//  spelled EXACTLY as in the CSV.
 // ============================================================================
-
-const OTHER_PLACEHOLDER = 'Something else — type it here';
 
 export const QUESTIONS = [
   {
     id: 'q1',
     kind: 'score',
     multi: true,
-    other: true,
-    otherPlaceholder: OTHER_PLACEHOLDER,
     prompt: 'I see myself as…', // anchor / beacon / oracle / kali
     options: [
-      { label: 'A protector standing guard over the people and spaces I love', themes: ['Grounding & Protection'] },
-      { label: 'A seeker, a builder, someone on the move', themes: ['Focus & Confidence'] },
-      { label: 'A thinker who turns things over', themes: ['Insight & Processing'] },
-      { label: 'A fighter who stands up for what is right', themes: ['Courage & Strength'] },
+      { label: 'A protector', sub: 'guarding the people and places I love', themes: ['Grounding & Protection'] },
+      { label: 'A seeker', sub: 'a builder, always in motion', themes: ['Focus & Confidence'] },
+      { label: 'A thinker', sub: 'I turn things over', themes: ['Insight & Processing'] },
+      { label: 'A fighter', sub: "I stand up for what's right", themes: ['Courage & Strength'] },
     ],
   },
   {
     id: 'q2',
     kind: 'score',
     multi: true,
-    other: true,
-    otherPlaceholder: OTHER_PLACEHOLDER,
     prompt: 'What would change everything right now?', // anchor / oracle / solace / emerge
     options: [
-      { label: 'Feeling safe enough to exhale', themes: ['Calm & Comfort'] },
-      { label: 'Trusting myself and knowing what I want', themes: ['Spiritual Connection'] },
-      { label: 'Finally tending the thing I keep pushing down', themes: ['Healing & Pathfinding'] },
-      { label: "Becoming a version of me I can't quite see yet", themes: ['Transformation & Growth'] },
+      { label: 'Room to exhale', sub: 'feeling safe enough to rest', themes: ['Calm & Comfort'] },
+      { label: 'Trusting myself', sub: 'knowing what I want', themes: ['Spiritual Connection'] },
+      { label: 'Facing what I avoid', sub: 'the thing I keep pushing down', themes: ['Healing & Pathfinding'] },
+      { label: "Becoming who's next", sub: "a me I can't quite see yet", themes: ['Transformation & Growth'] },
     ],
   },
   {
     id: 'q3',
     kind: 'score',
     multi: true,
-    other: true,
-    otherPlaceholder: OTHER_PLACEHOLDER,
-    prompt: 'Which sentence is most true today?', // beacon / solace / emerge / kali
+    prompt: 'Which is most true today?', // beacon / solace / emerge / kali
     options: [
-      { label: 'I know what I want; I need to move.', themes: ['Focus & Confidence'] },
-      { label: "Something's asking to be released.", themes: ['Healing & Release'] },
-      { label: "I'm waiting for clarity.", themes: ['Transformation & Growth'] },
-      { label: "I'm done being afraid of it.", themes: ['Courage & Strength'] },
+      { label: 'I need to move', sub: 'I know what I want', themes: ['Focus & Confidence'] },
+      { label: 'I need to release', sub: "something's asking to be let go", themes: ['Healing & Release'] },
+      { label: "I'm seeking clarity", sub: 'still waiting to see', themes: ['Transformation & Growth'] },
+      { label: "I'm done being afraid", sub: 'ready to face it', themes: ['Courage & Strength'] },
     ],
   },
   {
     id: 'q4',
     kind: 'context', // adds weight; carries each archetype's 3rd hit
     multi: true,
-    other: true,
-    otherPlaceholder: OTHER_PLACEHOLDER,
-    weight: 1, // each context theme adds this many points
-    prompt: 'And underneath all of it?',
+    weight: 1,
+    prompt: 'And underneath it all?',
     options: [
-      { label: 'A season of loss or grief', themes: ['Healing & Pathfinding', 'Calm & Comfort'] },
-      { label: 'A threshold — a move, a start, an ending', themes: ['Transformation & Growth', 'Courage & Strength'] },
-      { label: 'The daily grind wearing me thin', themes: ['Focus & Confidence', 'Grounding & Protection'] },
-      { label: 'A pull toward something bigger than me', themes: ['Spiritual Connection'] },
+      { label: 'Loss or grief', sub: 'a heavy season', themes: ['Healing & Pathfinding', 'Calm & Comfort'] },
+      { label: 'A threshold', sub: 'a move, a start, an ending', themes: ['Transformation & Growth', 'Courage & Strength'] },
+      { label: 'The daily grind', sub: 'wearing me thin', themes: ['Focus & Confidence', 'Grounding & Protection'] },
+      { label: 'Something bigger', sub: "a pull I can't name", themes: ['Spiritual Connection'] },
     ],
   },
   {
     id: 'q5',
     kind: 'format',
-    multi: true, // visitor can accept more than one format; used to order the recommendations
-    other: true,
-    otherPlaceholder: 'A different way — type it here',
+    multi: true, // visitor can accept more than one format; orders the recommendations
     prompt: 'How do you want it to reach you?',
     options: [
-      { label: 'In the air around me', format: 'diffuser' },
-      { label: 'Something I can carry and mist', format: 'spray' },
-      { label: 'On my skin, close', format: 'body' },
-      { label: 'A long soak, all the way down', format: 'bath' },
-      { label: "I'm not sure, show me everything", format: null }, // no preference — recommend across all formats
+      { label: 'In the air', sub: 'diffused around me', format: 'diffuser' },
+      { label: 'Carry & mist', sub: 'a spray for anywhere', format: 'spray' },
+      { label: 'On my skin', sub: 'close, like an oil', format: 'body' },
+      { label: 'A long soak', sub: 'in the bath', format: 'bath' },
+      { label: 'Show me everything', sub: 'no preference', format: null },
     ],
+  },
+  {
+    id: 'q6',
+    kind: 'open', // optional free-text; scores nothing, feeds the personalized reading
+    optional: true,
+    prompt: 'Anything you want your blend to know?',
+    hint: "Optional — a word, a feeling, what today's been like. Skip if you like.",
+    placeholder: "What's on your heart right now…",
   },
 ];
 
-// Questions that render a progress step (all six).
+// Questions that render a progress step (all of them).
 export const TOTAL_STEPS = QUESTIONS.length;

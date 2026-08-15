@@ -63,7 +63,7 @@ export function scoreAnswers(answers, opts = {}) {
   const availableSlugs = opts.availableSlugs || null;
   const a = {
     q1: normalize(answers.q1), q2: normalize(answers.q2), q3: normalize(answers.q3),
-    q4: normalize(answers.q4), q5: normalize(answers.q5),
+    q4: normalize(answers.q4), q5: normalize(answers.q5), q6: normalize(answers.q6),
   };
 
   // 1) tally theme points across every SELECTED option (multi-select)
