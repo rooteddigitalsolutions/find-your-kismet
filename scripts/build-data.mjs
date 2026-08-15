@@ -129,7 +129,8 @@ const all = toObjects(parseCSV(raw));
 
 const seen = new Set();
 const products = [];
-const warnings = [];
+const untagged = [];   // visible in the shop but NO theme tags => invisible to the quiz
+const noEssence = [];  // no one-line essence => result card shows title + price only
 
 for (const r of all) {
   if ((r['Visible'] || '').trim() !== 'Yes') continue;
@@ -166,8 +167,10 @@ for (const r of all) {
 
   const image = (r['Hosted Image URLs'] || '').split(/\s+/).filter(Boolean)[0] || '';
 
-  if (!themes.length) warnings.push(`no theme tags: "${title}" (${slug})`);
-  if (!essence) warnings.push(`no essence: "${title}" (${slug})`);
+  // A product visible in the shop but with no theme tags can never be matched to
+  // an archetype, so the quiz can never recommend it: for sale but invisible.
+  if (!themes.length) untagged.push({ title, slug, format, price: parseFloat(r['Price'] || '0') || null });
+  if (!essence) noEssence.push({ title, slug });
 
   products.push({
     slug,
@@ -213,7 +216,19 @@ console.log('\nArchetype × format coverage:');
 for (const [a, cells] of Object.entries(byArchetype)) {
   console.log(`  ${a.padEnd(8)} ${Object.entries(cells).map(([f, n]) => `${f}:${n}`).join('  ')}`);
 }
-if (warnings.length) {
-  console.log(`\n⚠  ${warnings.length} warning(s):`);
-  for (const w of warnings.slice(0, 40)) console.log('   - ' + w);
+// Loud, dedicated callout: these are live in the shop but the quiz can't ever
+// recommend them (no theme tags). Fix = add a theme tag in Squarespace.
+if (untagged.length) {
+  console.log(`\n⚠  ${untagged.length} LIVE product(s) FOR SALE BUT INVISIBLE TO THE QUIZ (no theme tags):`);
+  for (const u of untagged) {
+    console.log(`   • ${u.title}  (${u.slug})  ${u.price ? '$' + u.price : ''} [${u.format}]`);
+  }
+  console.log('   Fix: add a theme tag to each in Squarespace, then re-export the CSV.');
+} else {
+  console.log('\n✓ Every visible product has theme tags (all are quiz-eligible).');
+}
+// Softer note: these still work, their result card just has no description line.
+if (noEssence.length) {
+  console.log(`\n·  ${noEssence.length} product(s) with no essence line (card shows title + price only):`);
+  for (const n of noEssence) console.log(`   - ${n.title}  (${n.slug})`);
 }
