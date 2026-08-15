@@ -1,107 +1,155 @@
 {
   "generatedFrom": "data/products.csv",
-  "count": 45,
+  "count": 43,
   "products": [
     {
-      "slug": "adjust-release-diffuser-blend",
-      "title": "Adjust & Release Diffuser Blend",
-      "url": "/shop/p/adjust-release-diffuser-blend",
-      "productId": "69d697da4d15e01962997665",
-      "sku": "SQ0102573",
+      "slug": "calm-compose-body-blend",
+      "title": "Calm / Compose Body Blend",
+      "url": "/shop/p/calm-compose-body-blend",
+      "productId": "69d697950d7cda50fe217604",
+      "sku": "SQ6322708",
+      "price": 30,
+      "onSale": true,
+      "salePrice": 21,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/676cad43-638d-4bbb-aeee-76827ba8d59d/DSCF7089.jpg",
+      "essence": "Find your center when the world feels like too much.",
+      "blurb": "Calm/Compose is your pocket-sized reset button. This roll-on blend works to neutralize the grip of anger, frustration, and anxiety so you can return to yourself — centered, clear, and in control. Apply it at the start of a stressful day, before a difficult conversation, or anytime tension starts building in your body.",
+      "themes": [
+        "Calm & Comfort"
+      ],
+      "archetypes": [
+        "anchor"
+      ],
+      "format": "body",
+      "collections": [
+        "/body-blends"
+      ]
+    },
+    {
+      "slug": "courage-safety-body-blend",
+      "title": "Courage / Safety Body Blend",
+      "url": "/shop/p/courage-safety-body-blend",
+      "productId": "69d69798d071a85d033f9610",
+      "sku": "SQ8053762",
+      "price": 30,
+      "onSale": true,
+      "salePrice": 21,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/e9ae4549-5607-4ff7-9a28-102cc12fac46/DSCF7092.jpg",
+      "essence": "Take the next step — even when it scares you.",
+      "blurb": "This blend is for the moments when you know what you need to do but something inside won't let you move. Courage/Safety gives you the boost to speak up, set boundaries, and step into unfamiliar territory. This blend also stops fight-flight-freeze responses in their tracks.",
+      "themes": [
+        "Courage & Strength",
+        "Grounding & Protection"
+      ],
+      "archetypes": [
+        "kali",
+        "anchor"
+      ],
+      "format": "body",
+      "collections": [
+        "/body-blends"
+      ]
+    },
+    {
+      "slug": "comfort-relief-body-blend",
+      "title": "Comfort / Relief Body Blend",
+      "url": "/shop/p/comfort-relief-body-blend",
+      "productId": "69d6979a4d15e0196299761a",
+      "sku": "SQ1740316",
+      "price": 30,
+      "onSale": true,
+      "salePrice": 21,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/1f1f55b1-d968-46b2-afb7-c529553dee79/DSCF7091.jpg",
+      "essence": "Gentle support through grief, loss, and heartache.",
+      "blurb": "Loss takes many forms. Comfort/Relief gently helps release the waves of emotion that can feel overwhelming during these times. It doesn't numb the pain; it helps you process it so you can move through grief rather than getting stuck in it.",
+      "themes": [
+        "Calm & Comfort",
+        "Healing & Release"
+      ],
+      "archetypes": [
+        "anchor",
+        "solace"
+      ],
+      "format": "body",
+      "collections": [
+        "/body-blends"
+      ]
+    },
+    {
+      "slug": "dignity-stability-body-blend",
+      "title": "Dignity / Stability Body Blend",
+      "url": "/shop/p/dignity-stability-body-blend",
+      "productId": "69d6979c0d7cda50fe217610",
+      "sku": "SQ5085566",
+      "price": 30,
+      "onSale": true,
+      "salePrice": 21,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/bf9c455c-697f-4700-8e05-ab34b77bd338/DSCF7093.jpg",
+      "essence": "Remember your worth. Release what told you otherwise.",
+      "blurb": "Dignity/Stability was formulated to help you reconnect with your inherent worth, catch negative self-talk before it spirals, and extend yourself the same grace you so freely give others.",
+      "themes": [
+        "Courage & Strength",
+        "Healing & Release"
+      ],
+      "archetypes": [
+        "kali",
+        "solace"
+      ],
+      "format": "body",
+      "collections": [
+        "/body-blends"
+      ]
+    },
+    {
+      "slug": "fortitude-body-blend",
+      "title": "Fortitude Body Blend",
+      "url": "/shop/p/fortitude-body-blend",
+      "productId": "69d6979e0d7cda50fe217612",
+      "sku": "SQ6480003",
       "price": 30,
       "onSale": false,
       "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/f52e63f4-d2e1-4534-a31a-d27186885a2f/DSCF7075.jpg",
-      "essence": "Soften your grip. Release what you're carrying.",
-      "blurb": "Adjust & Release supports letting go of emotional baggage, rigid thinking, or energy that isn't yours.",
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/0cceabaa-a42c-4bd9-890d-03634474f07d/DSCF7095.jpg",
+      "essence": "Extra confidence and strength for the moments that matter.",
+      "blurb": "Some days require more from you than others. Fortitude is for those days — when your schedule is packed, the decisions feel heavy, and you need to keep showing up with clarity and confidence.",
       "themes": [
-        "Calm & Comfort",
+        "Courage & Strength",
+        "Focus & Confidence",
         "Insight & Processing"
       ],
       "archetypes": [
-        "anchor",
+        "kali",
+        "beacon",
         "oracle"
       ],
-      "format": "diffuser",
+      "format": "body",
       "collections": [
-        "/diffuser-blends"
+        "/body-blends"
       ]
     },
     {
-      "slug": "adjust-release-diffuser-blend-e8f87",
-      "title": "Patience Diffuser Blend",
-      "url": "/shop/p/adjust-release-diffuser-blend-e8f87",
-      "productId": "6a32bf30f96d62372f8af5a1",
-      "sku": "SQ2070637",
+      "slug": "emerge-body-blend",
+      "title": "Emerge Body Blend",
+      "url": "/shop/p/emerge-body-blend",
+      "productId": "69d697a10d7cda50fe21761a",
+      "sku": "SQ7620185",
       "price": 30,
       "onSale": false,
       "salePrice": null,
-      "image": "",
-      "essence": "Patience brings you into flow, willingness, a sense of goodwill, and harmony in your shared physical and relationship space.",
-      "blurb": "Patience brings you into flow, willingness, a sense of goodwill, and harmony in your shared physical and relationship space. Supports authentic connection, healthy exchange, and builds a framework of patient resilience necessary for healthy relationships centered in reciprocity.",
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/52558dea-57cf-44da-afc9-c4d51a67b908/DSCF7094.jpg",
+      "essence": "Emerge is not a gentle blend / Use before sleep / Daily use across diaphragm until empty.",
+      "blurb": "When you’ve tried everything but not had the results you wanted, Emerge will deliver transformation.  It is fiery, beautiful, and earth-shattering. Transformative moments that feel like volcanoes occur with regularity as your third eye opens bit by bit. Great choice if: you’re very stuck, you need a reset, are ready for an awakening, or it’s time to “level up”. You will not end up where you began. 3rd eye opener.",
       "themes": [
-        "Calm & Comfort",
+        "Focus & Confidence",
         "Transformation & Growth"
       ],
       "archetypes": [
-        "anchor",
+        "beacon",
         "emerge"
       ],
-      "format": "diffuser",
+      "format": "body",
       "collections": [
-        "/diffuser-blends"
-      ]
-    },
-    {
-      "slug": "adjust-release-diffuser-blend-kjx25",
-      "title": "Remover of Obstacles Diffuser Blend",
-      "url": "/shop/p/adjust-release-diffuser-blend-kjx25",
-      "productId": "6a32bf7ee0c92d5eb56a19a4",
-      "sku": "SQ2162858",
-      "price": 30,
-      "onSale": false,
-      "salePrice": null,
-      "image": "",
-      "essence": "",
-      "blurb": "",
-      "themes": [
-        "Focus & Confidence",
-        "Healing & Pathfinding"
-      ],
-      "archetypes": [
-        "beacon",
-        "solace"
-      ],
-      "format": "diffuser",
-      "collections": [
-        "/diffuser-blends"
-      ]
-    },
-    {
-      "slug": "alignment-soul-purpose-diffuser",
-      "title": "Alignment with Soul Purpose Diffuser Blend",
-      "url": "/shop/p/alignment-soul-purpose-diffuser",
-      "productId": "69d697ce4d15e0196299765a",
-      "sku": "SQ6684674",
-      "price": 30,
-      "onSale": false,
-      "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/e165ec76-d87e-4527-a764-a56051b29ade/DSCF7076.jpg",
-      "essence": "Get in sync with why you're here.",
-      "blurb": "Alignment with Soul Purpose helps you reconnect with the deeper reason you're here and step into your authentic path. Included in our Starter Kit because it's foundational.",
-      "themes": [
-        "Healing & Pathfinding",
-        "Transformation & Growth",
-        "Spiritual Connection"
-      ],
-      "archetypes": [
-        "solace",
-        "emerge",
-        "oracle"
-      ],
-      "format": "diffuser",
-      "collections": [
-        "/diffuser-blends"
+        "/body-blends"
       ]
     },
     {
@@ -111,8 +159,8 @@
       "productId": "69d697a30d7cda50fe21761d",
       "sku": "SQ1622633",
       "price": 30,
-      "onSale": false,
-      "salePrice": null,
+      "onSale": true,
+      "salePrice": 21,
       "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/d68e3d71-1c90-45e3-a9de-4535d330fcd0/DSCF7088.jpg",
       "essence": "See what you've been missing — within yourself and around you.",
       "blurb": "Awareness brings the next thing you need to see right to the surface. Users describe it as if blindfolds fall off — behaviors, thought patterns, and dynamics that were previously invisible suddenly become crystal clear.",
@@ -153,6 +201,81 @@
       ]
     },
     {
+      "slug": "non-attachment-body-blend",
+      "title": "Non-Attachment Body Blend",
+      "url": "/shop/p/non-attachment-body-blend",
+      "productId": "69d697a70d7cda50fe217622",
+      "sku": "SQ2210828",
+      "price": 30,
+      "onSale": true,
+      "salePrice": 21,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/6b64ba84-9ab7-484f-b0bf-c0ab0a02947e/DSCF7096.jpg",
+      "essence": "Let go of what no longer serves you.",
+      "blurb": "Non-Attachment supports releasing — whether it's attachment to outcomes, old identities, or expectations that keep you stuck. It's about finding freedom from trusting the flow of your life.",
+      "themes": [
+        "Healing & Release"
+      ],
+      "archetypes": [
+        "solace"
+      ],
+      "format": "body",
+      "collections": [
+        "/body-blends"
+      ]
+    },
+    {
+      "slug": "transitions-body-blend",
+      "title": "Transitions Body Blend",
+      "url": "/shop/p/transitions-body-blend",
+      "productId": "69d697a9d071a85d033f962c",
+      "sku": "SQ1440471",
+      "price": 30,
+      "onSale": false,
+      "salePrice": null,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/0261583e-e647-41f3-a1f1-dcb4c336977d/DSCF7098.jpg",
+      "essence": "Steady support when everything is changing.",
+      "blurb": "Transitions is formulated for the in-between spaces — when you've left the old but haven't quite arrived at the new.",
+      "themes": [
+        "Focus & Confidence",
+        "Transformation & Growth",
+        "Insight & Processing"
+      ],
+      "archetypes": [
+        "beacon",
+        "emerge",
+        "oracle"
+      ],
+      "format": "body",
+      "collections": [
+        "/body-blends"
+      ]
+    },
+    {
+      "slug": "spiritual-connection-body-blend",
+      "title": "Spiritual Connection Body Blend",
+      "url": "/shop/p/spiritual-connection-body-blend",
+      "productId": "69d697abd071a85d033f962d",
+      "sku": "SQ2335454",
+      "price": 30,
+      "onSale": false,
+      "salePrice": null,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/d298676e-5df8-4f31-a9a7-b49760bfc2ff/DSCF7097.jpg",
+      "essence": "This blend thins the veils around you and allows for easy connection to the spiritual current of the Universe.",
+      "blurb": "This blend thins the veils around you and allows for easy connection to the spiritual current of the Universe. Opens and balances the body’s chakra system. Use with ritual, art, divination, sacred sex, healing work, meditation, therapy, journaling, plant medicine, spellwork, or any spiritual experience where you desire a heightened connection.",
+      "themes": [
+        "Spiritual Connection",
+        "Insight & Processing"
+      ],
+      "archetypes": [
+        "oracle"
+      ],
+      "format": "body",
+      "collections": [
+        "/body-blends",
+        "/best-sellers"
+      ]
+    },
+    {
       "slug": "clarity-diffuser-blend",
       "title": "Clarity Diffuser Blend",
       "url": "/shop/p/clarity-diffuser-blend",
@@ -173,6 +296,54 @@
         "beacon",
         "solace",
         "oracle"
+      ],
+      "format": "diffuser",
+      "collections": [
+        "/diffuser-blends"
+      ]
+    },
+    {
+      "slug": "create-diffuser-blend",
+      "title": "Create Diffuser Blend",
+      "url": "/shop/p/create-diffuser-blend",
+      "productId": "69d697b04d15e0196299763c",
+      "sku": "SQ0731548",
+      "price": 30,
+      "onSale": true,
+      "salePrice": 21,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/6e459ecd-1a93-4079-9571-b64eefdd3f03/DSCF7079.jpg",
+      "essence": "Re-activate the creative spirit you were told to suppress.",
+      "blurb": "Create promotes electric, flowing energy that clears the upper chakras and activates your ability to manifest what you desire. Pair with Motivate for maximum impact.",
+      "themes": [
+        "Transformation & Growth"
+      ],
+      "archetypes": [
+        "emerge"
+      ],
+      "format": "diffuser",
+      "collections": [
+        "/diffuser-blends"
+      ]
+    },
+    {
+      "slug": "motivate-diffuser-blend",
+      "title": "Motivate Diffuser Blend",
+      "url": "/shop/p/motivate-diffuser-blend",
+      "productId": "69d697b26892561c57b51f31",
+      "sku": "SQ0470304",
+      "price": 30,
+      "onSale": false,
+      "salePrice": null,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/7a663f2f-302b-45e3-b692-8df99f255a02/DSCF7085.jpg",
+      "essence": "Get things done — even the projects you've been avoiding.",
+      "blurb": "Motivate was created for anyone who struggles with focus, follow-through, or the ability to finish what they start. Put 6 drops in your diffuser and watch what happens.",
+      "themes": [
+        "Courage & Strength",
+        "Focus & Confidence"
+      ],
+      "archetypes": [
+        "kali",
+        "beacon"
       ],
       "format": "diffuser",
       "collections": [
@@ -207,47 +378,24 @@
       ]
     },
     {
-      "slug": "congruity-bath-salts",
-      "title": "Congruity Bath Salts",
-      "url": "/shop/p/congruity-bath-salts",
-      "productId": "69d697f70d7cda50fe217694",
-      "sku": "SQ3640343",
-      "price": 25,
-      "onSale": false,
-      "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/f118b46e-a0cb-471c-99d0-07103b511eef/congruity+salts.jpg",
-      "essence": "Align your inner and outer worlds in one soak.",
-      "blurb": "When you feel scattered or fragmented, a Congruity bath helps bring everything back into alignment.",
-      "themes": [
-        "Healing & Pathfinding",
-        "Insight & Processing"
-      ],
-      "archetypes": [
-        "solace",
-        "oracle"
-      ],
-      "format": "bath",
-      "collections": [
-        "/bath-blends"
-      ]
-    },
-    {
-      "slug": "create-diffuser-blend",
-      "title": "Create Diffuser Blend",
-      "url": "/shop/p/create-diffuser-blend",
-      "productId": "69d697b04d15e0196299763c",
-      "sku": "SQ0731548",
+      "slug": "grounding-diffuser-blend",
+      "title": "Grounding Diffuser Blend",
+      "url": "/shop/p/grounding-diffuser-blend",
+      "productId": "69d697b76892561c57b51f3a",
+      "sku": "SQ7183553",
       "price": 30,
       "onSale": false,
       "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/6e459ecd-1a93-4079-9571-b64eefdd3f03/DSCF7079.jpg",
-      "essence": "Re-activate the creative spirit you were told to suppress.",
-      "blurb": "Create promotes electric, flowing energy that clears the upper chakras and activates your ability to manifest what you desire. Pair with Motivate for maximum impact.",
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/ca7090eb-ac74-42aa-8235-ef17ed670aa7/DSCF7082.jpg",
+      "essence": "Root into your body. Feel the earth beneath you.",
+      "blurb": "Grounding brings you back to your body and back to the present moment. This blend anchors your energy, quiets the mental noise, and helps you feel connected to the solid ground beneath you.",
       "themes": [
-        "Transformation & Growth"
+        "Grounding & Protection",
+        "Courage & Strength"
       ],
       "archetypes": [
-        "emerge"
+        "anchor",
+        "kali"
       ],
       "format": "diffuser",
       "collections": [
@@ -255,101 +403,75 @@
       ]
     },
     {
-      "slug": "create-spray",
-      "title": "Create & Manifest Spray",
-      "url": "/shop/p/create-spray",
-      "productId": "69d697ee6892561c57b51f9b",
-      "sku": "SQ7016676",
-      "price": 25,
+      "slug": "home-diffuser-blend",
+      "title": "Home Diffuser Blend",
+      "url": "/shop/p/home-diffuser-blend",
+      "productId": "69d697bc0d7cda50fe217644",
+      "sku": "SQ6050262",
+      "price": 30,
       "onSale": false,
       "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/b99b6406-d832-4af1-8677-157d288566ed/DSCF7064.jpg",
-      "essence": "This blend holds fire and promotes movement, creation, and manifestation energies.",
-      "blurb": "This blend holds fire and promotes movement, creation, and manifestation energies. These will help you reconnect with your personal power for creating anything - from art or a new business to spellwork. Super potent, paired with Motivate for use in learning environments or in daunting or overwhelming tasks. Sacral centered.",
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/6591633c-503f-423b-a7f1-84c18fa02e9e/DSCF7083.jpg",
+      "essence": "Clears patriarchal and hierarchical structures within and allows for deep resonance with Self / I AM.",
+      "blurb": "Clears patriarchal and hierarchical structures within and allows for deep resonance with Self / I AM. Particularly helpful when managing cognitive dissonance or narcissistic systems/people. Use to enhance the feeling of “home” in a space or within yourself, or if you’re having trouble setting down polarizing thoughts. Solar Plexus centered.",
       "themes": [
-        "Focus & Confidence",
-        "Transformation & Growth"
+        "Focus & Confidence"
       ],
       "archetypes": [
-        "beacon",
-        "emerge"
+        "beacon"
       ],
-      "format": "spray",
+      "format": "diffuser",
       "collections": [
-        "/spray-blends"
+        "/best-sellers",
+        "/diffuser-blends"
       ]
     },
     {
-      "slug": "create-spray-48jy5",
-      "title": "Thor's Hammer Spray",
-      "url": "/shop/p/create-spray-48jy5",
-      "productId": "6a32c09a5dc85a535fa20cdf",
-      "sku": "SQ0881566",
-      "price": 25,
+      "slug": "alignment-soul-purpose-diffuser",
+      "title": "Alignment with Soul Purpose Diffuser Blend",
+      "url": "/shop/p/alignment-soul-purpose-diffuser",
+      "productId": "69d697ce4d15e0196299765a",
+      "sku": "SQ6684674",
+      "price": 30,
       "onSale": false,
       "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/692ec37b-99db-4dab-98e6-c7ac2756bdc6/Thors+Hammer+Spray.jpg",
-      "essence": "Thor’s Hammer is a blend used to clear a space FAST, leaving a sparkling strength in its wake.",
-      "blurb": "Thor’s Hammer is a blend used to clear a space FAST, leaving a sparkling strength in its wake. Spray this blend on yourself, an object, or in a room or area that may need a little “send everything that doesn’t belong here on its way” energy. Use this in the air or on your body, even on your clothes or furniture/ linens.  It smells like lightning!",
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/e165ec76-d87e-4527-a764-a56051b29ade/DSCF7076.jpg",
+      "essence": "Get in sync with why you're here.",
+      "blurb": "Alignment with Soul Purpose helps you reconnect with the deeper reason you're here and step into your authentic path. Included in our Starter Kit because it's foundational.",
       "themes": [
-        "Grounding & Protection",
-        "Courage & Strength",
+        "Healing & Pathfinding",
+        "Transformation & Growth",
         "Spiritual Connection"
       ],
       "archetypes": [
-        "anchor",
-        "kali",
+        "solace",
+        "emerge",
         "oracle"
       ],
-      "format": "spray",
+      "format": "diffuser",
       "collections": [
-        "/spray-blends",
-        "/seasonal"
+        "/diffuser-blends"
       ]
     },
     {
-      "slug": "emerge-body-blend",
-      "title": "Emerge Body Blend",
-      "url": "/shop/p/emerge-body-blend",
-      "productId": "69d697a10d7cda50fe21761a",
-      "sku": "SQ7620185",
+      "slug": "adjust-release-diffuser-blend",
+      "title": "Adjust & Release Diffuser Blend",
+      "url": "/shop/p/adjust-release-diffuser-blend",
+      "productId": "69d697da4d15e01962997665",
+      "sku": "SQ0102573",
       "price": 30,
       "onSale": false,
       "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/52558dea-57cf-44da-afc9-c4d51a67b908/DSCF7094.jpg",
-      "essence": "Emerge is not a gentle blend / Use before sleep / Daily use across diaphragm until empty.",
-      "blurb": "When you’ve tried everything but not had the results you wanted, Emerge will deliver transformation.  It is fiery, beautiful, and earth-shattering. Transformative moments that feel like volcanoes occur with regularity as your third eye opens bit by bit. Great choice if: you’re very stuck, you need a reset, are ready for an awakening, or it’s time to “level up”. You will not end up where you began. 3rd eye opener.",
-      "themes": [
-        "Focus & Confidence",
-        "Transformation & Growth"
-      ],
-      "archetypes": [
-        "beacon",
-        "emerge"
-      ],
-      "format": "body",
-      "collections": [
-        "/body-blends"
-      ]
-    },
-    {
-      "slug": "for-the-land-diffuser-blend",
-      "title": "For The Land Diffuser Blend",
-      "url": "/shop/p/for-the-land-diffuser-blend",
-      "productId": "69d697e10d7cda50fe217675",
-      "sku": "SQ2004211",
-      "price": 30,
-      "onSale": false,
-      "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/224a7ec0-dcea-4be9-a6fc-95b54f44f717/DSCF7081.jpg",
-      "essence": "Clear, cleanse, and heal the energy of your space and land.",
-      "blurb": "For The Land helps energetically clear physical spaces, releasing old karma from locations. It also creates a natural energetic barrier against lower vibrational energies.",
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/f52e63f4-d2e1-4534-a31a-d27186885a2f/DSCF7075.jpg",
+      "essence": "Soften your grip. Release what you're carrying.",
+      "blurb": "Adjust & Release supports letting go of emotional baggage, rigid thinking, or energy that isn't yours.",
       "themes": [
         "Calm & Comfort",
-        "Grounding & Protection"
+        "Insight & Processing"
       ],
       "archetypes": [
-        "anchor"
+        "anchor",
+        "oracle"
       ],
       "format": "diffuser",
       "collections": [
@@ -382,24 +504,22 @@
       ]
     },
     {
-      "slug": "forgiveness-diffuser-blend-9c6wh",
-      "title": "Create & Manifest Diffuser Blend",
-      "url": "/shop/p/forgiveness-diffuser-blend-9c6wh",
-      "productId": "6a32a82690475f3806aa8add",
-      "sku": "SQ8147340",
+      "slug": "mutuality-diffuser-blend",
+      "title": "Mutuality Diffuser Blend",
+      "url": "/shop/p/mutuality-diffuser-blend",
+      "productId": "69d697de4d15e01962997677",
+      "sku": "SQ6582001",
       "price": 30,
-      "onSale": false,
-      "salePrice": null,
-      "image": "",
-      "essence": "This blend holds fire and promotes movement, creation, and manifestation energies.",
-      "blurb": "This blend holds fire and promotes movement, creation, and manifestation energies. These will help you reconnect with your personal power for creating anything - from art or a new business to spellwork. Super potent paired with Motivate for use in learning environments or in daunting or overwhelming tasks. Sacral centered.",
+      "onSale": true,
+      "salePrice": 21,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/c1f4550e-e12d-490b-afb9-a40155151dc8/DSCF7086+1.jpg",
+      "essence": "Build relationships rooted in balance and reciprocity.",
+      "blurb": "Mutuality dissolves patterns of codependency, people-pleasing, and one-sided dynamics, replacing them with genuine reciprocity.",
       "themes": [
-        "Focus & Confidence",
-        "Transformation & Growth"
+        "Healing & Release"
       ],
       "archetypes": [
-        "beacon",
-        "emerge"
+        "solace"
       ],
       "format": "diffuser",
       "collections": [
@@ -407,55 +527,78 @@
       ]
     },
     {
-      "slug": "fortitude-body-blend",
-      "title": "Fortitude Body Blend",
-      "url": "/shop/p/fortitude-body-blend",
-      "productId": "69d6979e0d7cda50fe217612",
-      "sku": "SQ6480003",
+      "slug": "for-the-land-diffuser-blend",
+      "title": "For The Land Diffuser Blend",
+      "url": "/shop/p/for-the-land-diffuser-blend",
+      "productId": "69d697e10d7cda50fe217675",
+      "sku": "SQ2004211",
       "price": 30,
       "onSale": false,
       "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/0cceabaa-a42c-4bd9-890d-03634474f07d/DSCF7095.jpg",
-      "essence": "Extra confidence and strength for the moments that matter.",
-      "blurb": "Some days require more from you than others. Fortitude is for those days — when your schedule is packed, the decisions feel heavy, and you need to keep showing up with clarity and confidence.",
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/224a7ec0-dcea-4be9-a6fc-95b54f44f717/DSCF7081.jpg",
+      "essence": "Clear, cleanse, and heal the energy of your space and land.",
+      "blurb": "For The Land helps energetically clear physical spaces, releasing old karma from locations. It also creates a natural energetic barrier against lower vibrational energies.",
       "themes": [
-        "Courage & Strength",
-        "Focus & Confidence",
+        "Calm & Comfort",
+        "Grounding & Protection"
+      ],
+      "archetypes": [
+        "anchor"
+      ],
+      "format": "diffuser",
+      "collections": [
+        "/diffuser-blends"
+      ]
+    },
+    {
+      "slug": "regenerate-diffuser-blend",
+      "title": "Regenerate Diffuser Blend",
+      "url": "/shop/p/regenerate-diffuser-blend",
+      "productId": "69d697e30d7cda50fe217677",
+      "sku": "SQ4780600",
+      "price": 30,
+      "onSale": true,
+      "salePrice": 21,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/9d2bf121-a440-4288-a949-f70a80852e70/DSCF7087.jpg",
+      "essence": "An energy-clearing powerhouse for deep spiritual work.",
+      "blurb": "Regenerate supports connection with your higher self and can illuminate latent memories from other lives while clearing past life and ancestral DNA from trauma and karma.",
+      "themes": [
+        "Spiritual Connection",
+        "Healing & Release"
+      ],
+      "archetypes": [
+        "oracle",
+        "solace"
+      ],
+      "format": "diffuser",
+      "collections": [
+        "/diffuser-blends"
+      ]
+    },
+    {
+      "slug": "smokeless-smudge-spray",
+      "title": "Smokeless Smudge Spray",
+      "url": "/shop/p/smokeless-smudge-spray",
+      "productId": "69d697e54d15e01962997680",
+      "sku": "SQ1716665",
+      "price": 25,
+      "onSale": false,
+      "salePrice": null,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/80274aca-2f92-415f-8323-7d10b0772729/DSCF7071.jpg",
+      "essence": "Sage-free",
+      "blurb": "This spray is an effective tool for clearing spaces without smoke. You can also use it to detox yourself after an outing, gathering, or before meditation or ritual. Clears stagnant energy. Use Smokeless Smudge in the air, on your body, or on fabric. Supportive after nightmares and helpful during bouts of anxiety. Palo Santo centered and Sage-free",
+      "themes": [
+        "Grounding & Protection",
         "Insight & Processing"
       ],
       "archetypes": [
-        "kali",
-        "beacon",
+        "anchor",
         "oracle"
       ],
-      "format": "body",
+      "format": "spray",
       "collections": [
-        "/body-blends"
-      ]
-    },
-    {
-      "slug": "grounding-diffuser-blend",
-      "title": "Grounding Diffuser Blend",
-      "url": "/shop/p/grounding-diffuser-blend",
-      "productId": "69d697b76892561c57b51f3a",
-      "sku": "SQ7183553",
-      "price": 30,
-      "onSale": false,
-      "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/ca7090eb-ac74-42aa-8235-ef17ed670aa7/DSCF7082.jpg",
-      "essence": "Root into your body. Feel the earth beneath you.",
-      "blurb": "Grounding brings you back to your body and back to the present moment. This blend anchors your energy, quiets the mental noise, and helps you feel connected to the solid ground beneath you.",
-      "themes": [
-        "Grounding & Protection",
-        "Courage & Strength"
-      ],
-      "archetypes": [
-        "anchor",
-        "kali"
-      ],
-      "format": "diffuser",
-      "collections": [
-        "/diffuser-blends"
+        "/best-sellers",
+        "/spray-blends"
       ]
     },
     {
@@ -496,35 +639,116 @@
       "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/2c42fcb8-9239-485d-b81e-bdbe1faadb9d/DSCF7069.jpg",
       "essence": "Align your energy and bring peace to any room.",
       "blurb": "Harmony aligns and opens the throat, solar plexus, and root chakras, creating balanced wholeness.",
-      "themes": [],
-      "archetypes": [],
+      "themes": [
+        "Calm & Comfort",
+        "Spiritual Connection"
+      ],
+      "archetypes": [
+        "anchor",
+        "oracle"
+      ],
       "format": "spray",
       "collections": [
         "/spray-blends"
       ]
     },
     {
-      "slug": "home-diffuser-blend",
-      "title": "Home Diffuser Blend",
-      "url": "/shop/p/home-diffuser-blend",
-      "productId": "69d697bc0d7cda50fe217644",
-      "sku": "SQ6050262",
-      "price": 30,
-      "onSale": false,
-      "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/6591633c-503f-423b-a7f1-84c18fa02e9e/DSCF7083.jpg",
-      "essence": "Clears patriarchal and hierarchical structures within and allows for deep resonance with Self / I AM.",
-      "blurb": "Clears patriarchal and hierarchical structures within and allows for deep resonance with Self / I AM. Particularly helpful when managing cognitive dissonance or narcissistic systems/people. Use to enhance the feeling of “home” in a space or within yourself, or if you’re having trouble setting down polarizing thoughts. Solar Plexus centered.",
+      "slug": "balance-spray",
+      "title": "Balance Spray",
+      "url": "/shop/p/balance-spray",
+      "productId": "69d697ec6892561c57b51f96",
+      "sku": "SQ2745325",
+      "price": 25,
+      "onSale": true,
+      "salePrice": 17.5,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/5f22afa7-8ce6-4bd7-bde5-c090eb1af6d9/DSCF7067.jpg",
+      "essence": "When something's off but you can't quite name it.",
+      "blurb": "Balance relaxes your mind, releases tension, and promotes flexibility and creativity in thought. It also helps balance feminine and masculine energy.",
       "themes": [
-        "Focus & Confidence"
+        "Grounding & Protection",
+        "Calm & Comfort"
       ],
       "archetypes": [
-        "beacon"
+        "anchor"
       ],
-      "format": "diffuser",
+      "format": "spray",
+      "collections": [
+        "/spray-blends"
+      ]
+    },
+    {
+      "slug": "create-spray",
+      "title": "Create & Manifest Spray",
+      "url": "/shop/p/create-spray",
+      "productId": "69d697ee6892561c57b51f9b",
+      "sku": "SQ7016676",
+      "price": 25,
+      "onSale": false,
+      "salePrice": null,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/b99b6406-d832-4af1-8677-157d288566ed/DSCF7064.jpg",
+      "essence": "This blend holds fire and promotes movement, creation, and manifestation energies.",
+      "blurb": "This blend holds fire and promotes movement, creation, and manifestation energies. These will help you reconnect with your personal power for creating anything - from art or a new business to spellwork. Super potent, paired with Motivate for use in learning environments or in daunting or overwhelming tasks. Sacral centered.",
+      "themes": [
+        "Focus & Confidence",
+        "Transformation & Growth"
+      ],
+      "archetypes": [
+        "beacon",
+        "emerge"
+      ],
+      "format": "spray",
+      "collections": [
+        "/spray-blends"
+      ]
+    },
+    {
+      "slug": "psychic-protection-spray",
+      "title": "Protect Spray",
+      "url": "/shop/p/psychic-protection-spray",
+      "productId": "69d697f0d071a85d033f969e",
+      "sku": "SQ3817662",
+      "price": 25,
+      "onSale": false,
+      "salePrice": null,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/e5d7ecee-c412-45e0-8c20-1ab34a782dfe/DSCF7066.jpg",
+      "essence": "Especially helpful for home protection/wards/grids",
+      "blurb": "This blend draws energetic boundaries if you don’t know how or if you need extra power in banishing or in wards/shields. Use on your body or clothing for protection in an emotionally charged environment, a crowd, or a toxic space. The more you use, the more “invisible” you become to others, so if you need to go shopping (or astral project) but don’t want to interact with anyone, this is for you. Especially helpful for home protection/wards/grids",
+      "themes": [
+        "Calm & Comfort",
+        "Grounding & Protection"
+      ],
+      "archetypes": [
+        "anchor"
+      ],
+      "format": "spray",
       "collections": [
         "/best-sellers",
-        "/diffuser-blends"
+        "/spray-blends"
+      ]
+    },
+    {
+      "slug": "overcoming-grief-spray",
+      "title": "Overcoming Grief Spray",
+      "url": "/shop/p/overcoming-grief-spray",
+      "productId": "69d697f36892561c57b51fa3",
+      "sku": "SQ5112301",
+      "price": 25,
+      "onSale": false,
+      "salePrice": null,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/3fed6a8b-c676-491f-9979-fb9759d94765/DSCF7072.jpg",
+      "essence": "Feels like a blanket of comfort, Overcoming Grief “fills the potholes” of hurts and losses, helping regulate the nervous system and giving you the space to breathe (or fall asleep if you can’t stop ugly crying).",
+      "blurb": "Feels like a blanket of comfort, Overcoming Grief “fills the potholes” of hurts and losses, helping regulate the nervous system and giving you the space to breathe (or fall asleep if you can’t stop ugly crying).  Grief is part of everyday life, we gain and lose all the time.  Use this blend for everyday losses, annoyances, frustrations, and raw grief whenever they show up.",
+      "themes": [
+        "Calm & Comfort",
+        "Healing & Pathfinding"
+      ],
+      "archetypes": [
+        "anchor",
+        "solace"
+      ],
+      "format": "spray",
+      "collections": [
+        "/spray-blends"
       ]
     },
     {
@@ -546,6 +770,106 @@
       "archetypes": [
         "kali",
         "beacon"
+      ],
+      "format": "spray",
+      "collections": [
+        "/spray-blends"
+      ]
+    },
+    {
+      "slug": "congruity-bath-salts",
+      "title": "Congruity Bath Salts",
+      "url": "/shop/p/congruity-bath-salts",
+      "productId": "69d697f70d7cda50fe217694",
+      "sku": "SQ3640343",
+      "price": 25,
+      "onSale": false,
+      "salePrice": null,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/f118b46e-a0cb-471c-99d0-07103b511eef/congruity+salts.jpg",
+      "essence": "Align your inner and outer worlds in one soak.",
+      "blurb": "When you feel scattered or fragmented, a Congruity bath helps bring everything back into alignment.",
+      "themes": [
+        "Healing & Pathfinding",
+        "Insight & Processing"
+      ],
+      "archetypes": [
+        "solace",
+        "oracle"
+      ],
+      "format": "bath",
+      "collections": [
+        "/bath-blends"
+      ]
+    },
+    {
+      "slug": "peaceful-comfort-bath-salts",
+      "title": "Peaceful Comfort Bath Salts",
+      "url": "/shop/p/peaceful-comfort-bath-salts",
+      "productId": "69d697f96892561c57b51fa9",
+      "sku": "SQ7588540",
+      "price": 25,
+      "onSale": false,
+      "salePrice": null,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/bdec2665-e0a5-4353-9aef-41e35d3a291f/peaceful+comfort+salts.jpg",
+      "essence": "Dissolve the day. Let peace settle in.",
+      "blurb": "Some days you just need to melt. This isn't just a bath — it's a ritual.",
+      "themes": [
+        "Calm & Comfort",
+        "Grounding & Protection"
+      ],
+      "archetypes": [
+        "anchor"
+      ],
+      "format": "bath",
+      "collections": [
+        "/bath-blends"
+      ]
+    },
+    {
+      "slug": "wellness-bath-salts",
+      "title": "Wellness Bath Salts",
+      "url": "/shop/p/wellness-bath-salts",
+      "productId": "69d697fc4d15e01962997699",
+      "sku": "SQ2210878",
+      "price": 25,
+      "onSale": false,
+      "salePrice": null,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/416154f9-9009-421b-b08d-fee41e1cccaa/wellness+salts.jpg",
+      "essence": "A full-body reset for when you need to feel whole again.",
+      "blurb": "Wellness bath salts support your body's natural ability to restore and rebalance.",
+      "themes": [
+        "Healing & Pathfinding",
+        "Insight & Processing"
+      ],
+      "archetypes": [
+        "solace",
+        "oracle"
+      ],
+      "format": "bath",
+      "collections": [
+        "/best-sellers",
+        "/bath-blends"
+      ]
+    },
+    {
+      "slug": "smokeless-smudge-spray-phmnj",
+      "title": "God/dess Spray",
+      "url": "/shop/p/smokeless-smudge-spray-phmnj",
+      "productId": "6a32bfcbe0c92d5eb56a2a7a",
+      "sku": "SQ4565254",
+      "price": 25,
+      "onSale": false,
+      "salePrice": null,
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/d6677990-c600-41fb-bca4-6b4790553c68/God_Dess+Spray.jpg",
+      "essence": "This blend amplifies and harmonizes the divine masculine and feminine, laying the magical groundwork for creating sacred space.",
+      "blurb": "This blend amplifies and harmonizes the divine masculine and feminine, laying the magical groundwork for creating sacred space. It brings sparkle to your power and intent when working with the God & Goddess.  Beautiful for altar work, shadow work, sex magic, or any ritual space.",
+      "themes": [
+        "Focus & Confidence",
+        "Spiritual Connection"
+      ],
+      "archetypes": [
+        "beacon",
+        "oracle"
       ],
       "format": "spray",
       "collections": [
@@ -584,43 +908,53 @@
       ]
     },
     {
-      "slug": "insight-diffuser-blend",
-      "title": "Insight Diffuser Blend",
-      "url": "/shop/p/insight-diffuser-blend",
-      "productId": "69d697c90d7cda50fe217658",
-      "sku": "SQ3314662",
-      "price": 30,
+      "slug": "create-spray-48jy5",
+      "title": "Thor's Hammer Spray",
+      "url": "/shop/p/create-spray-48jy5",
+      "productId": "6a32c09a5dc85a535fa20cdf",
+      "sku": "SQ0881566",
+      "price": 25,
       "onSale": false,
       "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/1112845e-5bfa-4aac-a795-1ec782bdd25c/DSCF7084.jpg",
-      "essence": "Unlock a-ha moments and truly understand what you're learning.",
-      "blurb": "Insight fosters breakthrough moments when everything suddenly clicks. Perfect for students, researchers, and anyone deep in a learning process.",
-      "themes": [],
-      "archetypes": [],
-      "format": "diffuser",
-      "collections": [
-        "/diffuser-blends"
-      ]
-    },
-    {
-      "slug": "motivate-diffuser-blend",
-      "title": "Motivate Diffuser Blend",
-      "url": "/shop/p/motivate-diffuser-blend",
-      "productId": "69d697b26892561c57b51f31",
-      "sku": "SQ0470304",
-      "price": 30,
-      "onSale": false,
-      "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/7a663f2f-302b-45e3-b692-8df99f255a02/DSCF7085.jpg",
-      "essence": "Get things done — even the projects you've been avoiding.",
-      "blurb": "Motivate was created for anyone who struggles with focus, follow-through, or the ability to finish what they start. Put 6 drops in your diffuser and watch what happens.",
+      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/692ec37b-99db-4dab-98e6-c7ac2756bdc6/Thors+Hammer+Spray.jpg",
+      "essence": "Thor’s Hammer is a blend used to clear a space FAST, leaving a sparkling strength in its wake.",
+      "blurb": "Thor’s Hammer is a blend used to clear a space FAST, leaving a sparkling strength in its wake. Spray this blend on yourself, an object, or in a room or area that may need a little “send everything that doesn’t belong here on its way” energy. Use this in the air or on your body, even on your clothes or furniture/ linens.  It smells like lightning!",
       "themes": [
+        "Grounding & Protection",
         "Courage & Strength",
-        "Focus & Confidence"
+        "Spiritual Connection"
       ],
       "archetypes": [
+        "anchor",
         "kali",
-        "beacon"
+        "oracle"
+      ],
+      "format": "spray",
+      "collections": [
+        "/spray-blends"
+      ]
+    },
+    {
+      "slug": "of-the-crow-diffuser-blend",
+      "title": "Of the Crow Diffuser Blend",
+      "url": "/shop/p/of-the-crow-diffuser-blend",
+      "productId": "6a3c18f7ac41db618c434014",
+      "sku": "SQ8153802",
+      "price": 30,
+      "onSale": false,
+      "salePrice": null,
+      "image": "",
+      "essence": "",
+      "blurb": "",
+      "themes": [
+        "Calm & Comfort",
+        "Healing & Pathfinding",
+        "Transformation & Growth"
+      ],
+      "archetypes": [
+        "anchor",
+        "solace",
+        "emerge"
       ],
       "format": "diffuser",
       "collections": [
@@ -628,22 +962,24 @@
       ]
     },
     {
-      "slug": "mutuality-diffuser-blend",
-      "title": "Mutuality Diffuser Blend",
-      "url": "/shop/p/mutuality-diffuser-blend",
-      "productId": "69d697de4d15e01962997677",
-      "sku": "SQ6582001",
+      "slug": "insight-understanding-diffuser-blend",
+      "title": "Insight & Understanding Diffuser Blend",
+      "url": "/shop/p/insight-understanding-diffuser-blend",
+      "productId": "6a3c18fa8968ae6f9244bb11",
+      "sku": "SQ6232116",
       "price": 30,
       "onSale": false,
       "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/c1f4550e-e12d-490b-afb9-a40155151dc8/DSCF7086+1.jpg",
-      "essence": "Build relationships rooted in balance and reciprocity.",
-      "blurb": "Mutuality dissolves patterns of codependency, people-pleasing, and one-sided dynamics, replacing them with genuine reciprocity.",
+      "image": "",
+      "essence": "Make the complex simple.",
+      "blurb": "This blend connects the dots and braids mental complexities together for deep integration and processing, a great aid for making the complex simple. It is dynamic paired with a Congruity bath when you are looking for a lightning bolt of awareness, and especially useful in seasons when you are processing a lot of information at once and feel overwhelmed.",
       "themes": [
-        "Healing & Release"
+        "Focus & Confidence",
+        "Insight & Processing"
       ],
       "archetypes": [
-        "solace"
+        "beacon",
+        "oracle"
       ],
       "format": "diffuser",
       "collections": [
@@ -651,22 +987,25 @@
       ]
     },
     {
-      "slug": "non-attachment-body-blend",
-      "title": "Non-Attachment Body Blend",
-      "url": "/shop/p/non-attachment-body-blend",
-      "productId": "69d697a70d7cda50fe217622",
-      "sku": "SQ2210828",
+      "slug": "samhain-body-blend",
+      "title": "Samhain Body Blend",
+      "url": "/shop/p/samhain-body-blend",
+      "productId": "6a3c18fc21dbe14148bd8bea",
+      "sku": "SQ1434388",
       "price": 30,
       "onSale": false,
       "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/6b64ba84-9ab7-484f-b0bf-c0ab0a02947e/DSCF7096.jpg",
-      "essence": "Let go of what no longer serves you.",
-      "blurb": "Non-Attachment supports releasing — whether it's attachment to outcomes, old identities, or expectations that keep you stuck. It's about finding freedom from trusting the flow of your life.",
+      "image": "",
+      "essence": "",
+      "blurb": "",
       "themes": [
-        "Healing & Release"
+        "Healing & Pathfinding",
+        "Spiritual Connection",
+        "Insight & Processing"
       ],
       "archetypes": [
-        "solace"
+        "solace",
+        "oracle"
       ],
       "format": "body",
       "collections": [
@@ -674,392 +1013,17 @@
       ]
     },
     {
-      "slug": "overcoming-grief-spray",
-      "title": "Overcoming Grief Spray",
-      "url": "/shop/p/overcoming-grief-spray",
-      "productId": "69d697f36892561c57b51fa3",
-      "sku": "SQ5112301",
-      "price": 25,
-      "onSale": false,
-      "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/3fed6a8b-c676-491f-9979-fb9759d94765/DSCF7072.jpg",
-      "essence": "Feels like a blanket of comfort, Overcoming Grief “fills the potholes” of hurts and losses, helping regulate the nervous system and giving you the space to breathe (or fall asleep if you can’t stop ugly crying).",
-      "blurb": "Feels like a blanket of comfort, Overcoming Grief “fills the potholes” of hurts and losses, helping regulate the nervous system and giving you the space to breathe (or fall asleep if you can’t stop ugly crying).  Grief is part of everyday life, we gain and lose all the time.  Use this blend for everyday losses, annoyances, frustrations, and raw grief whenever they show up.",
-      "themes": [
-        "Calm & Comfort",
-        "Healing & Pathfinding"
-      ],
-      "archetypes": [
-        "anchor",
-        "solace"
-      ],
-      "format": "spray",
-      "collections": [
-        "/spray-blends"
-      ]
-    },
-    {
-      "slug": "peaceful-comfort-bath-salts",
-      "title": "Peaceful Comfort Bath Salts",
-      "url": "/shop/p/peaceful-comfort-bath-salts",
-      "productId": "69d697f96892561c57b51fa9",
-      "sku": "SQ7588540",
-      "price": 25,
-      "onSale": false,
-      "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/bdec2665-e0a5-4353-9aef-41e35d3a291f/peaceful+comfort+salts.jpg",
-      "essence": "Dissolve the day. Let peace settle in.",
-      "blurb": "Some days you just need to melt. This isn't just a bath — it's a ritual.",
-      "themes": [
-        "Calm & Comfort",
-        "Grounding & Protection"
-      ],
-      "archetypes": [
-        "anchor"
-      ],
-      "format": "bath",
-      "collections": [
-        "/bath-blends"
-      ]
-    },
-    {
-      "slug": "psychic-protection-spray",
-      "title": "Protect Spray",
-      "url": "/shop/p/psychic-protection-spray",
-      "productId": "69d697f0d071a85d033f969e",
-      "sku": "SQ3817662",
-      "price": 25,
-      "onSale": false,
-      "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/e5d7ecee-c412-45e0-8c20-1ab34a782dfe/DSCF7066.jpg",
-      "essence": "Especially helpful for home protection/wards/grids",
-      "blurb": "This blend draws energetic boundaries if you don’t know how or if you need extra power in banishing or in wards/shields. Use on your body or clothing for protection in an emotionally charged environment, a crowd, or a toxic space. The more you use, the more “invisible” you become to others, so if you need to go shopping (or astral project) but don’t want to interact with anyone, this is for you. Especially helpful for home protection/wards/grids",
-      "themes": [
-        "Calm & Comfort",
-        "Grounding & Protection"
-      ],
-      "archetypes": [
-        "anchor"
-      ],
-      "format": "spray",
-      "collections": [
-        "/best-sellers",
-        "/spray-blends"
-      ]
-    },
-    {
-      "slug": "smokeless-smudge-spray",
-      "title": "Smokeless Smudge Spray",
-      "url": "/shop/p/smokeless-smudge-spray",
-      "productId": "69d697e54d15e01962997680",
-      "sku": "SQ1716665",
-      "price": 25,
-      "onSale": false,
-      "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/80274aca-2f92-415f-8323-7d10b0772729/DSCF7071.jpg",
-      "essence": "Sage-free",
-      "blurb": "This spray is an effective tool for clearing spaces without smoke. You can also use it to detox yourself after an outing, gathering, or before meditation or ritual. Clears stagnant energy. Use Smokeless Smudge in the air, on your body, or on fabric. Supportive after nightmares and helpful during bouts of anxiety. Palo Santo centered and Sage-free",
-      "themes": [
-        "Grounding & Protection",
-        "Insight & Processing"
-      ],
-      "archetypes": [
-        "anchor",
-        "oracle"
-      ],
-      "format": "spray",
-      "collections": [
-        "/best-sellers",
-        "/spray-blends"
-      ]
-    },
-    {
-      "slug": "smokeless-smudge-spray-phmnj",
-      "title": "God/dess Spray",
-      "url": "/shop/p/smokeless-smudge-spray-phmnj",
-      "productId": "6a32bfcbe0c92d5eb56a2a7a",
-      "sku": "SQ4565254",
-      "price": 25,
-      "onSale": false,
-      "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/d6677990-c600-41fb-bca4-6b4790553c68/God_Dess+Spray.jpg",
-      "essence": "This blend amplifies and harmonizes the divine masculine and feminine, laying the magical groundwork for creating sacred space.",
-      "blurb": "This blend amplifies and harmonizes the divine masculine and feminine, laying the magical groundwork for creating sacred space. It brings sparkle to your power and intent when working with the God & Goddess.  Beautiful for altar work, shadow work, sex magic, or any ritual space.",
-      "themes": [
-        "Focus & Confidence",
-        "Spiritual Connection"
-      ],
-      "archetypes": [
-        "beacon",
-        "oracle"
-      ],
-      "format": "spray",
-      "collections": [
-        "/spray-blends"
-      ]
-    },
-    {
-      "slug": "spiritual-connection-body-blend",
-      "title": "Spiritual Connection Body Blend",
-      "url": "/shop/p/spiritual-connection-body-blend",
-      "productId": "69d697abd071a85d033f962d",
-      "sku": "SQ2335454",
+      "slug": "shadow-work-body-blend",
+      "title": "Shadow Work Body Blend",
+      "url": "/shop/p/shadow-work-body-blend",
+      "productId": "6a3c18fdac41db618c43401d",
+      "sku": "SQ0783083",
       "price": 30,
       "onSale": false,
       "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/d298676e-5df8-4f31-a9a7-b49760bfc2ff/DSCF7097.jpg",
-      "essence": "This blend thins the veils around you and allows for easy connection to the spiritual current of the Universe.",
-      "blurb": "This blend thins the veils around you and allows for easy connection to the spiritual current of the Universe. Opens and balances the body’s chakra system. Use with ritual, art, divination, sacred sex, healing work, meditation, therapy, journaling, plant medicine, spellwork, or any spiritual experience where you desire a heightened connection.",
-      "themes": [
-        "Spiritual Connection",
-        "Insight & Processing"
-      ],
-      "archetypes": [
-        "oracle"
-      ],
-      "format": "body",
-      "collections": [
-        "/body-blends",
-        "/best-sellers"
-      ]
-    },
-    {
-      "slug": "starter-kit",
-      "title": "Starter Kit",
-      "url": "/shop/p/starter-kit",
-      "productId": "69d697fe4d15e0196299769c",
-      "sku": "SQ2633061",
-      "price": 125,
-      "onSale": false,
-      "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/90c01887-875b-4a77-b485-0df7e4a178e9/DSCF7692.jpg",
-      "essence": "Everything you need to begin your transformation journey.",
-      "blurb": "Our curated Starter Kit includes four foundational blends: Smokeless Smudge Spray, Clarity Diffuser, Clairvoyance Body Blend, and Alignment with Soul Purpose Diffuser. Plus product info cards, online video support, and a personal blend consultation.",
-      "themes": [
-        "Transformation & Growth",
-        "Spiritual Connection"
-      ],
-      "archetypes": [
-        "emerge",
-        "oracle"
-      ],
-      "format": "kit",
-      "collections": [
-        "/best-sellers",
-        "/kits-packs"
-      ]
-    },
-    {
-      "slug": "summer-2026-collection",
-      "title": "Summer Collection Set 2026",
-      "url": "/shop/p/summer-2026-collection",
-      "productId": "6a32c244dbedb812c32d04fe",
-      "sku": "SQ2200961",
-      "price": 149,
-      "onSale": false,
-      "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/67cd1267-39be-4055-9d09-e6432d5e350f/Summer+Set+1.jpg",
-      "essence": "Fire season is here.",
-      "blurb": "Six blends built for burning it down and building it back — sacred, sovereign, and unapologetically yours.",
-      "themes": [],
-      "archetypes": [],
-      "format": "kit",
-      "collections": [
-        "/best-sellers",
-        "/kits-packs"
-      ]
-    },
-    {
-      "slug": "the-awakening-set",
-      "title": "The Awakening Set",
-      "url": "/shop/p/the-awakening-set",
-      "productId": "69d6980e0d7cda50fe2176b3",
-      "sku": "SQ8007413",
-      "price": 75,
-      "onSale": false,
-      "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/9887a26a-a697-4da9-b281-1cf1786f15d8/the-awakening-set-collage.jpg",
-      "essence": "Open the veil. Remember why you're here.",
-      "blurb": "Includes: Alignment with Soul Purpose Diffuser + Spiritual Connection Body Blend + God/dess Spray. Save $10 vs. buying separately.",
-      "themes": [
-        "Spiritual Connection",
-        "Transformation & Growth"
-      ],
-      "archetypes": [
-        "oracle",
-        "emerge"
-      ],
-      "format": "kit",
-      "collections": []
-    },
-    {
-      "slug": "the-awareness-set",
-      "title": "The Awareness Set",
-      "url": "/shop/p/the-awareness-set",
-      "productId": "69d698100d7cda50fe2176bb",
-      "sku": "SQ3848046",
-      "price": 75,
-      "onSale": false,
-      "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/b10a946b-52cb-4d2b-8a69-85e0a1271965/the-awareness-set-collage.jpg",
-      "essence": "Turn your sight inward. See what you've been missing.",
-      "blurb": "Includes: Awareness Body Blend + Clairvoyance Body Blend + Congruity Bath Salts. Save $10 vs. buying separately.",
-      "themes": [
-        "Insight & Processing"
-      ],
-      "archetypes": [
-        "oracle"
-      ],
-      "format": "kit",
-      "collections": []
-    },
-    {
-      "slug": "the-calm-set",
-      "title": "The Calm Set",
-      "url": "/shop/p/the-calm-set",
-      "productId": "69d6980a6892561c57b51fbd",
-      "sku": "SQ7485360",
-      "price": 75,
-      "onSale": false,
-      "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/adb08e22-555d-403e-b910-a6fe71759ce5/the-calm-set-collage.jpg",
-      "essence": "Soften your grip. Let the day dissolve.",
-      "blurb": "Includes: Adjust & Release Diffuser + Patience Diffuser + Peaceful Comfort Bath Salts. Save $10 vs. buying separately.",
-      "themes": [
-        "Calm & Comfort"
-      ],
-      "archetypes": [
-        "anchor"
-      ],
-      "format": "kit",
-      "collections": []
-    },
-    {
-      "slug": "the-clarity-set",
-      "title": "The Clarity Set",
-      "url": "/shop/p/the-clarity-set",
-      "productId": "69d6980b6892561c57b51fbe",
-      "sku": "SQ8788652",
-      "price": 75,
-      "onSale": false,
-      "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/c435fc8e-d804-49f1-a8da-0e9f69d73589/the-clarity-set-collage.jpg",
-      "essence": "Cut the fog. Find your drive. Move.",
-      "blurb": "Includes: Clarity Diffuser + Motivate Diffuser + Fortitude Body Blend. Save $15 vs. buying separately.",
-      "themes": [
-        "Spiritual Connection",
-        "Insight & Processing"
-      ],
-      "archetypes": [
-        "oracle"
-      ],
-      "format": "kit",
-      "collections": []
-    },
-    {
-      "slug": "the-courage-set",
-      "title": "The Courage Set",
-      "url": "/shop/p/the-courage-set",
-      "productId": "69d6980c4d15e019629976b0",
-      "sku": "SQ5130344",
-      "price": 75,
-      "onSale": false,
-      "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/f551e85f-9cf5-4f5e-9b14-89f03eeea026/the-courage-set-collage.jpg",
-      "essence": "Stand in your power. Clear what no longer serves.",
-      "blurb": "Includes: Home Diffuser + Fortitude Body Blend + Kali Spray. Save $10 vs. buying separately.",
-      "themes": [
-        "Courage & Strength",
-        "Grounding & Protection"
-      ],
-      "archetypes": [
-        "kali",
-        "anchor"
-      ],
-      "format": "kit",
-      "collections": []
-    },
-    {
-      "slug": "the-creator-set",
-      "title": "The Creator Set",
-      "url": "/shop/p/the-creator-set",
-      "productId": "69d6980c6892561c57b51fc2",
-      "sku": "SQ2260072",
-      "price": 75,
-      "onSale": false,
-      "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/85efcbfa-17ae-4ec2-8a6c-0605b7b62e0c/the-creator-set-collage.jpg",
-      "essence": "Reignite the maker in you. Become what's next.",
-      "blurb": "Includes: Create Diffuser + Emerge Body Blend + Create & Manifest Spray. Save $10 vs. buying separately.",
-      "themes": [
-        "Focus & Confidence",
-        "Courage & Strength"
-      ],
-      "archetypes": [
-        "beacon",
-        "kali"
-      ],
-      "format": "kit",
-      "collections": []
-    },
-    {
-      "slug": "the-grounding-set",
-      "title": "The Grounding Set",
-      "url": "/shop/p/the-grounding-set",
-      "productId": "69d6980dd071a85d033f96cb",
-      "sku": "SQ4584663",
-      "price": 75,
-      "onSale": false,
-      "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/ab4715de-45c0-4227-9676-22deb8d96111/the-grounding-set-collage.jpg",
-      "essence": "Root into your body. Make your space safe.",
-      "blurb": "Includes: Grounding Diffuser + For The Land Diffuser + Protect Spray. Save $10 vs. buying separately.",
-      "themes": [
-        "Grounding & Protection",
-        "Transformation & Growth"
-      ],
-      "archetypes": [
-        "anchor",
-        "emerge"
-      ],
-      "format": "kit",
-      "collections": []
-    },
-    {
-      "slug": "the-healing-set",
-      "title": "The Healing Set",
-      "url": "/shop/p/the-healing-set",
-      "productId": "69d6980fd071a85d033f96d2",
-      "sku": "SQ7307138",
-      "price": 75,
-      "onSale": false,
-      "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/acb4e493-5b5f-4e5c-bc53-a79aa1eefe8a/the-healing-set-collage.jpg",
-      "essence": "Forgive. Release. Let yourself mend.",
-      "blurb": "Includes: Forgiveness Diffuser + Non-Attachment Body Blend + Overcoming Grief Spray. Save $10 vs. buying separately.",
-      "themes": [
-        "Healing & Pathfinding",
-        "Calm & Comfort"
-      ],
-      "archetypes": [
-        "solace",
-        "anchor"
-      ],
-      "format": "kit",
-      "collections": []
-    },
-    {
-      "slug": "transitions-body-blend",
-      "title": "Transitions Body Blend",
-      "url": "/shop/p/transitions-body-blend",
-      "productId": "69d697a9d071a85d033f962c",
-      "sku": "SQ1440471",
-      "price": 30,
-      "onSale": false,
-      "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/0261583e-e647-41f3-a1f1-dcb4c336977d/DSCF7098.jpg",
-      "essence": "Steady support when everything is changing.",
-      "blurb": "Transitions is formulated for the in-between spaces — when you've left the old but haven't quite arrived at the new.",
+      "image": "",
+      "essence": "Meet what is ready to be seen.",
+      "blurb": "The Shadow Work blend brings to the forefront the next thing you need to see on your path of spiritual growth and emotional awareness. It acts as a lens that lets you clearly distinguish between Truth and self-abandonment. An excellent accompaniment for plant medicine, dreamwork, astral projection, and Jungian tools. Third eye centered.",
       "themes": [
         "Focus & Confidence",
         "Transformation & Growth",
@@ -1076,70 +1040,84 @@
       ]
     },
     {
-      "slug": "wellness-bath-salts",
-      "title": "Wellness Bath Salts",
-      "url": "/shop/p/wellness-bath-salts",
-      "productId": "69d697fc4d15e01962997699",
-      "sku": "SQ2210878",
+      "slug": "invoke-spray",
+      "title": "Invoke Spray",
+      "url": "/shop/p/invoke-spray",
+      "productId": "6a3c1901ac41db618c434021",
+      "sku": "SQ0177161",
       "price": 25,
       "onSale": false,
       "salePrice": null,
-      "image": "https://images.squarespace-cdn.com/content/v1/69cfd7f26e65b829ca8608be/416154f9-9009-421b-b08d-fee41e1cccaa/wellness+salts.jpg",
-      "essence": "A full-body reset for when you need to feel whole again.",
-      "blurb": "Wellness bath salts support your body's natural ability to restore and rebalance.",
+      "image": "",
+      "essence": "Set your intention. Hold the connection.",
+      "blurb": "This blend holds the vibration you invoke, a helpful aid in gridwork, ritual, and setting intent. It holds and supports a strong connection when working with guides or deities, and can help clear psychic static.",
       "themes": [
-        "Healing & Pathfinding",
+        "Transformation & Growth",
+        "Spiritual Connection",
         "Insight & Processing"
       ],
       "archetypes": [
-        "solace",
+        "emerge",
         "oracle"
       ],
-      "format": "bath",
+      "format": "spray",
       "collections": [
-        "/best-sellers",
-        "/bath-blends"
+        "/spray-blends"
+      ]
+    },
+    {
+      "slug": "psychic-protection-spray-1",
+      "title": "Psychic Protection Spray",
+      "url": "/shop/p/psychic-protection-spray-1",
+      "productId": "6a7f8d51762f55650d9a3be5",
+      "sku": "SQ2400604",
+      "price": 25,
+      "onSale": true,
+      "salePrice": 17.5,
+      "image": "",
+      "essence": "",
+      "blurb": "",
+      "themes": [],
+      "archetypes": [],
+      "format": "spray",
+      "collections": [
+        "/spray-blends"
       ]
     }
   ],
   "coverage": {
     "anchor": {
-      "diffuser": 5,
-      "spray": 6,
-      "bath": 1,
-      "kit": 4
-    },
-    "oracle": {
-      "diffuser": 4,
-      "body": 5,
-      "bath": 2,
-      "spray": 4,
-      "kit": 4
-    },
-    "emerge": {
-      "diffuser": 4,
       "body": 3,
-      "spray": 2,
-      "kit": 3
-    },
-    "beacon": {
       "diffuser": 5,
-      "spray": 4,
-      "body": 3,
-      "kit": 1
-    },
-    "solace": {
-      "diffuser": 6,
-      "bath": 2,
-      "body": 1,
-      "spray": 1,
-      "kit": 1
+      "spray": 8,
+      "bath": 1
     },
     "kali": {
+      "body": 3,
       "diffuser": 3,
-      "spray": 4,
-      "body": 1,
-      "kit": 2
+      "spray": 4
+    },
+    "solace": {
+      "body": 4,
+      "diffuser": 7,
+      "spray": 1,
+      "bath": 2
+    },
+    "beacon": {
+      "body": 4,
+      "diffuser": 4,
+      "spray": 4
+    },
+    "oracle": {
+      "body": 7,
+      "diffuser": 6,
+      "spray": 6,
+      "bath": 2
+    },
+    "emerge": {
+      "body": 4,
+      "diffuser": 3,
+      "spray": 3
     }
   }
 }
