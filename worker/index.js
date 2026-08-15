@@ -32,17 +32,20 @@ export default {
   async fetch(request, env) {
     const origin = request.headers.get('Origin') || '';
     const cors = corsHeaders(origin);
-
-    if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
-    if (request.method !== 'POST') return json({ error: 'POST only' }, 405, cors);
-
-    let body;
-    try { body = await request.json(); } catch { return json({ error: 'bad json' }, 400, cors); }
-
-    const prompt = buildPrompt(body);
-    if (!prompt) return json({ error: 'missing fields' }, 400, cors);
-
     try {
+      if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
+      if (request.method !== 'POST') return json({ error: 'POST only' }, 405, cors);
+
+      if (!env || !env.ANTHROPIC_API_KEY) {
+        return json({ error: 'ANTHROPIC_API_KEY secret is not set on this Worker' }, 500, cors);
+      }
+
+      let body;
+      try { body = await request.json(); } catch { return json({ error: 'bad json' }, 400, cors); }
+
+      const prompt = buildPrompt(body);
+      if (!prompt) return json({ error: 'missing fields' }, 400, cors);
+
       const res = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: {
@@ -57,7 +60,10 @@ export default {
           messages: [{ role: 'user', content: prompt.user }],
         }),
       });
-      if (!res.ok) return json({ error: 'upstream', status: res.status }, 502, cors);
+      if (!res.ok) {
+        const detail = await res.text().catch(() => '');
+        return json({ error: 'anthropic', status: res.status, detail: detail.slice(0, 300) }, 502, cors);
+      }
       const data = await res.json();
       const reading = (data.content || [])
         .filter((b) => b.type === 'text')
@@ -66,8 +72,8 @@ export default {
         .trim();
       if (!reading) return json({ error: 'empty' }, 502, cors);
       return json({ reading }, 200, cors);
-    } catch (_) {
-      return json({ error: 'fetch failed' }, 502, cors);
+    } catch (e) {
+      return json({ error: 'worker exception', message: String(e && e.message || e) }, 500, cors);
     }
   },
 };
