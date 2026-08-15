@@ -1077,8 +1077,14 @@
       "image": "",
       "essence": "",
       "blurb": "",
-      "themes": [],
-      "archetypes": [],
+      "themes": [
+        "Spiritual Connection",
+        "Grounding & Protection"
+      ],
+      "archetypes": [
+        "oracle",
+        "anchor"
+      ],
       "format": "spray",
       "collections": [
         "/spray-blends"
@@ -1089,7 +1095,7 @@
     "anchor": {
       "body": 3,
       "diffuser": 5,
-      "spray": 8,
+      "spray": 9,
       "bath": 1
     },
     "kali": {
@@ -1111,7 +1117,7 @@
     "oracle": {
       "body": 7,
       "diffuser": 6,
-      "spray": 6,
+      "spray": 7,
       "bath": 2
     },
     "emerge": {
